@@ -1,8 +1,8 @@
 <template>
-<v-footer dark height="50" color="indigo" app>
+<v-footer light height="45" color="yellow darken-1" app fixed>
   <v-layout row align-center>
     <v-flex xs12 align-content-center justify-center>
-      <p class="body-1 my-1 text-xs-center">
+      <p class="body-1 my-0 text-xs-center">
         &copy; 2018 Mullumbimby High School
       </p>
     </v-flex>
