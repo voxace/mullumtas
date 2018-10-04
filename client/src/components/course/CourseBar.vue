@@ -1,0 +1,17 @@
+<template>
+<v-toolbar color="yellow darken-1" class="mb-2" extended>
+  <v-layout align-center justify-center row fill-height slot="extension">
+    <h3 class="headline">Year 12 - Software Design and Development</h3>
+  </v-layout>
+</v-toolbar>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style scoped>
+
+</style>
