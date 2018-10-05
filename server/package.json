@@ -1,14 +1,25 @@
 {
   "name": "mullumtas-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "New MullumTAS Website",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js",
+    "lint": "./node_modules/.bin/eslint **/*.js --fix --quiet"
   },
   "author": "David Steedman",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3"
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mongoose": "^5.3.1",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "prettier-eslint": "^8.8.2"
   }
 }

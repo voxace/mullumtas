@@ -2,7 +2,7 @@
 <v-expansion-panel-content>
 
   <v-layout slot="header" align-center justify-space-between>
-    <h3 class="headline mt-2 mb-0">Unit 1 - Social and Ethical Issues</h3>
+    <h3 class="headline mt-2 mb-0">{{ unit.title }}</h3>
     <h4 class="subheading mt-2 mr-4">7/7</h4>
   </v-layout>
 
@@ -19,12 +19,12 @@ import Section from '@/components/course/Section.vue';
 
 export default {
   name: 'unit',
+  props: ['unit'],
   components: {
-    appSection: Section
-  }
-}
+    appSection: Section,
+  },
+};
 </script>
 
 <style>
-
 </style>

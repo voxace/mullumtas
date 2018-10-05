@@ -1,11 +1,11 @@
 <template>
 <v-flex xs12 sm6 md4 align-center justify-center>
-  <v-card hover to="/course">
+  <v-card hover :to="'/course/' + course.short">
     <v-card-title primary-title class="align-center justify-center">
-      <h1 class="display-3">Year 12</h1>
+      <h1 class="display-3">Year {{ course.grade }}</h1>
     </v-card-title>
     <v-card-text class="text-xs-center">
-      <h3 class="headline my-3">Software Design and Development</h3>
+      <h3 class="headline my-3">{{ course.title }}</h3>
       </v-card-title>
       <v-card-actions class="align-center justify-center">
         <v-btn flat color="indigo">Access Course</v-btn>
@@ -16,12 +16,12 @@
 
 <script>
 export default {
-
-}
+  props: ['course'],
+};
 </script>
 
 <style scoped>
 .v-card__title {
-  background-color: #EEEEEE !important;
+  background-color: #eeeeee !important;
 }
 </style>
