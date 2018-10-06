@@ -10,6 +10,7 @@
       <v-card-actions class="align-center justify-center">
         <v-btn flat color="indigo">Access Course</v-btn>
       </v-card-actions>
+    </v-card-text>
   </v-card>
 </v-flex>
 </template>
