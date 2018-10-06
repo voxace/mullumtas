@@ -1,7 +1,7 @@
 <template>
 <v-app light>
   <app-header />
-  <v-snackbar v-model="snackbar" timeout="3000" :color="snackbarColor" top="true">
+  <v-snackbar v-model="snackbar" timeout=3000 :color="snackbarColor" top=true>
     {{ snackbarMessage }}
     <v-btn dark flat @click="snackbar = false">
       Close
