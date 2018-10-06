@@ -4,7 +4,7 @@
   <v-container fluid fill-height grid-list-lg>
     <v-layout row wrap>
       <v-expansion-panel>
-        <app-unit v-for="item in course.units" :key="item.id" :unit="item" />
+        <app-unit v-for="item in course.units" :key="item._id" :unit="item" />
       </v-expansion-panel>
     </v-layout>
   </v-container>

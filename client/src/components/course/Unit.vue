@@ -8,7 +8,7 @@
 
   <v-card>
     <v-divider></v-divider>
-    <app-section v-for="i in 3" />
+    <app-section v-for="item in sections" :key="item._id" :section="item" />
   </v-card>
 
 </v-expansion-panel-content>
@@ -22,6 +22,28 @@ export default {
   props: ['unit'],
   components: {
     appSection: Section,
+  },
+  data() {
+    return {
+      unit: {},
+      sections: {},
+    };
+  },
+  methods: {
+    getUnit() {
+      var vm = this;
+      this.$http
+        .get('/unit/' + vm.unit._id + '/sections')
+        .then(response => {
+          vm.sections = response.data.sections;
+        })
+        .catch(err => {
+          console.log('Error: ' + err);
+        });
+    },
+  },
+  created() {
+    this.getUnit();
   },
 };
 </script>

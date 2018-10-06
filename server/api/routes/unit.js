@@ -5,9 +5,9 @@ module.exports = function (router) {
   router.get('/unit/:id', (req, res) => {
     Unit.findById(req.params.id)
       .exec()
-      .then(docs => res.status(200).json(docs))
+      .then(data => res.status(200).json(data))
       .catch(err => res.status(500).json({
-        message: 'Error finding course',
+        message: 'Error finding unit',
         error: err,
       }));
   });
@@ -16,7 +16,19 @@ module.exports = function (router) {
   router.get('/unit/title/:title', (req, res) => {
     Unit.findOne({ title: req.params.title })
       .exec()
-      .then(docs => res.status(200).json(docs))
+      .then(data => res.status(200).json(data))
+      .catch(err => res.status(500).json({
+        message: 'Error finding unit',
+        error: err,
+      }));
+  });
+
+  // Get all sections in a unit
+  router.get('/unit/:id/sections', (req, res) => {
+    Unit.findById(req.params.id)
+      .populate('sections')
+      .exec()
+      .then(data => res.status(200).json(data))
       .catch(err => res.status(500).json({
         message: 'Error finding unit',
         error: err,
@@ -26,9 +38,9 @@ module.exports = function (router) {
   // Create new course
   router.post('/unit', (req, res) => {
     const unit = new Unit(req.body);
-    unit.save((err, user) => {
+    unit.save((err, data) => {
       if (err) return console.log(err);
-      res.status(200).json(user);
+      res.status(200).json(data);
     });
   });
 };

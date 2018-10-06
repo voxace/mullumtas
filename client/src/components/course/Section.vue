@@ -2,34 +2,47 @@
 <v-list class="mb-0 pb-0" subheader>
 
   <v-subheader>
-    <h2>Tasks</h2>
+    <h2>{{ section.title }}</h2>
   </v-subheader>
 
-  <v-list-tile @click="" v-for="i in 3">
-
-    <v-list-tile-avatar size="28">
-      <v-icon size="22" class="blue white--text">assignment</v-icon>
-    </v-list-tile-avatar>
-
-    <v-list-tile-content>
-      Assignment {{i}}
-    </v-list-tile-content>
-
-    <v-list-tile-action>
-      <v-checkbox></v-checkbox>
-    </v-list-tile-action>
-
-  </v-list-tile>
+  <app-resource v-for="item in resources" :key="item_id" :resource="item" />
 
 </v-list>
 </template>
 
 <script>
-export default {
+import Resource from '@/components/course/Resource.vue';
 
-}
+export default {
+  name: 'section',
+  props: ['section'],
+  components: {
+    appResource: Resource,
+  },
+  data() {
+    return {
+      section: {},
+      resources: {},
+    };
+  },
+  methods: {
+    getUnit() {
+      var vm = this;
+      this.$http
+        .get('/section/' + vm.section._id + '/resources')
+        .then(response => {
+          vm.resources = response.data.resources;
+        })
+        .catch(err => {
+          console.log('Error: ' + err);
+        });
+    },
+  },
+  created() {
+    this.getUnit();
+  },
+};
 </script>
 
 <style>
-
 </style>
