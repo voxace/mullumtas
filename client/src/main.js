@@ -9,7 +9,7 @@ import store from './store';
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = 'http://localhost:8081/api';
+axios.defaults.baseURL = 'http://localhost:3001/api';
 Vue.use(VueAxios, axios);
 
 new Vue({
