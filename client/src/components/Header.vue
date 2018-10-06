@@ -51,7 +51,8 @@ export default {
   data() {
     return {
       admin: true,
-      items: [{
+      items: [
+        {
           icon: 'account_circle',
           href: '#',
           title: 'Profile',
@@ -84,8 +85,13 @@ export default {
     },
   },
   computed: {
-    editing() {
-      return this.$store.getters.isEditing;
+    editing: {
+      get: function() {
+        return this.$store.getters.isEditing;
+      },
+      set: function(newValue) {
+        // Do nothing
+      },
     },
   },
 };

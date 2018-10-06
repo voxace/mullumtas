@@ -1,7 +1,7 @@
 <template>
 <v-app light>
   <app-header />
-  <v-snackbar v-model="snackbar" timeout=3000 :color="snackbarColor" top=true>
+  <v-snackbar v-model="snackbar" :timeout="timeout" :color="snackbarColor" :top="top">
     {{ snackbarMessage }}
     <v-btn dark flat @click="snackbar = false">
       Close
@@ -23,6 +23,12 @@ export default {
   components: {
     appHeader: Header,
     appFooter: Footer,
+  },
+  data() {
+    return {
+      timeout: 3000,
+      top: true,
+    };
   },
   computed: {
     snackbar() {
