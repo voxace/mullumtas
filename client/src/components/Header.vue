@@ -6,6 +6,8 @@
   <v-spacer></v-spacer>
   <v-toolbar-items>
 
+    <v-switch v-if="admin" label="Editing" color="yellow darken-1" v-model="editing" @click.native="toggle" class="my-3 mr-3"></v-switch>
+
     <v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
       <v-btn icon flat slot="activator">
         <v-badge color="red" overlap>
@@ -44,35 +46,48 @@ import NotificationList from '@/components/widgets/NotificationList';
 export default {
   name: 'app-toolbar',
   components: {
-    NotificationList
+    NotificationList,
   },
-  data: () => ({
-    items: [{
-        icon: 'account_circle',
-        href: '#',
-        title: 'Profile',
-        click: (e) => {
-          console.log(e);
-        }
-      },
-      {
-        icon: 'settings',
-        href: '#',
-        title: 'Settings',
-        click: (e) => {
-          console.log(e);
-        }
-      },
-      {
-        icon: 'fullscreen_exit',
-        href: '#',
-        title: 'Logout',
-        click: (e) => {
-          window.getApp.$emit('APP_LOGOUT');
-        }
-      }
-    ],
-  })
+  data() {
+    return {
+      admin: true,
+      items: [{
+          icon: 'account_circle',
+          href: '#',
+          title: 'Profile',
+          click: e => {
+            console.log(e);
+          },
+        },
+        {
+          icon: 'settings',
+          href: '#',
+          title: 'Settings',
+          click: e => {
+            console.log(e);
+          },
+        },
+        {
+          icon: 'fullscreen_exit',
+          href: '#',
+          title: 'Logout',
+          click: e => {
+            window.getApp.$emit('APP_LOGOUT');
+          },
+        },
+      ],
+    };
+  },
+  methods: {
+    toggle() {
+      this.$store.dispatch('toggleEditing');
+    },
+  },
+  computed: {
+    editing() {
+      return this.$store.getters.isEditing;
+    },
+  },
 };
 </script>
 

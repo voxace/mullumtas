@@ -22,7 +22,8 @@ app.use((req, res, next) => {
   res.json(err);
 });
 
-mongoose.connect('mongodb://localhost:27017/mullumtas');
+// mongoose.connect('mongodb://localhost:27017/mullumtas');
+mongoose.connect('mongodb://testing:testing123@ds050087.mlab.com:50087/mullumtas');
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));

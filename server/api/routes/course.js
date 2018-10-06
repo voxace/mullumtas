@@ -1,4 +1,5 @@
 const Course = require('../../models/course');
+const Unit = require('../../models/unit');
 
 module.exports = function (router) {
   // Get course by ID
@@ -36,8 +37,8 @@ module.exports = function (router) {
 
   // Get all courses
   router.get('/courses', (req, res) => {
-    console.log(req);
     Course.find()
+      .sort('grade')
       .exec()
       .then(data => res.status(200).json(data))
       .catch(err => res.status(500).json({
@@ -59,11 +60,51 @@ module.exports = function (router) {
   });
 
   // Create new course
-  router.post('/course', (req, res) => {
+  router.post('/course/', (req, res) => {
     const course = new Course(req.body);
     course.save((err, data) => {
-      if (err) return console.log(err);
-      res.status(200).json(data);
+      if (err) {
+        console.log(err.message);
+        res.status(500).send({ error: 'Something went wrong!' });
+      } else {
+        res.status(200).json(data);
+      }
     });
+  });
+
+  // Delete course
+  router.delete('/course/:id', (req, res) => {
+    Course.findById(req.params.id)
+      .populate({
+        path: 'units',
+        populate: {
+          path: 'sections',
+          populate: {
+            path: 'resources',
+          },
+        },
+      })
+      .exec()
+      .then((course) => {
+        console.log(course.title);
+        course.units.forEach((unit) => {
+          console.log(unit.title);
+          unit.sections.forEach((section) => {
+            console.log(section.title);
+            section.resources.forEach((resource) => {
+              console.log(resource.title);
+              // TODO: delete resource
+            });
+            // TODO: delete section
+          });
+          // TODO: delete unit
+        });
+        // TODO: delete course
+        res.status(200).json('success');
+      })
+      .catch(err => res.status(500).json({
+        message: 'Error deleting course',
+        error: err,
+      }));
   });
 };
