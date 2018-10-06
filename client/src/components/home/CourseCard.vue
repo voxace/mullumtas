@@ -6,7 +6,6 @@
     </v-card-title>
     <v-card-text class="text-xs-center">
       <h3 class="headline my-3">{{ course.title }}</h3>
-      </v-card-title>
       <v-card-actions class="align-center justify-center">
         <v-btn flat color="indigo">Access Course</v-btn>
       </v-card-actions>
