@@ -24,6 +24,9 @@ const actions = {
   openErrorBar(context, message) {
     context.commit('openErrorBar', message);
   },
+  closeSnackBar(context) {
+    context.commit('closeSnackBar');
+  },
 };
 
 const mutations = {
@@ -39,6 +42,9 @@ const mutations = {
     state.snackbar = true;
     state.snackbarColor = 'error';
     state.snackbarMessage = message;
+  },
+  closeSnackBar(state) {
+    state.snackbar = false;
   },
 };
 

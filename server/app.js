@@ -11,7 +11,13 @@ app.set('port', 3001);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+
 app.use('/api', api);
 app.use(express.static('static'));
 app.use(morgan('dev'));

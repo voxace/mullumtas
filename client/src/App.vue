@@ -31,8 +31,13 @@ export default {
     };
   },
   computed: {
-    snackbar() {
-      return this.$store.getters.snackbar;
+    snackbar: {
+      get: function() {
+        return this.$store.getters.snackbar;
+      },
+      set: function() {
+        this.$store.commit('closeSnackBar');
+      },
     },
     snackbarMessage() {
       return this.$store.getters.snackbarMessage;
