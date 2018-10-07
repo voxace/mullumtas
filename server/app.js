@@ -13,7 +13,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://192.168.1.232:3000', // DEV
+  // origin: 'http://159.65.107.105:3000', // TEST
+  // origin: 'http://www.mullumtas.com', // PROD
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
@@ -28,8 +30,8 @@ app.use((req, res, next) => {
   res.json(err);
 });
 
-// mongoose.connect('mongodb://localhost:27017/mullumtas');
-mongoose.connect('mongodb://testing:testing123@ds050087.mlab.com:50087/mullumtas');
+// mongoose.connect('mongodb://localhost:27017/mullumtas'); // LOCAL
+mongoose.connect('mongodb://testing:testing123@ds050087.mlab.com:50087/mullumtas'); // TEST
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));

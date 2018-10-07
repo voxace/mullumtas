@@ -33,7 +33,4 @@ export default {
 </script>
 
 <style scoped>
-.v-card__title123 {
-  background-color: #eeeeee !important;
-}
 </style>
