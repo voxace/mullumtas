@@ -1,5 +1,5 @@
 <template>
-<v-toolbar color="indigo" dark app style="z-index: 1000;">
+<v-toolbar color="indigo" dark app style="z-index: 200;">
   <router-link to="/" exact>
     <v-toolbar-title>MullumTAS</v-toolbar-title>
   </router-link>
@@ -51,8 +51,7 @@ export default {
   data() {
     return {
       admin: true,
-      items: [
-        {
+      items: [{
           icon: 'account_circle',
           href: '#',
           title: 'Profile',
