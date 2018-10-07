@@ -6,7 +6,7 @@ import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import config from './config';
+import config from '../config';
 
 Vue.config.productionTip = false;
 
