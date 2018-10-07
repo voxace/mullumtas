@@ -72,6 +72,20 @@ module.exports = function (router) {
     });
   });
 
+  // Update user document...
+  router.put('/course/:id', (req, res) => {
+    const qry = { _id: req.params.id };
+    const course = req.body;
+    Course.update(qry, course, (err, response) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send({ error: 'Something went wrong!' });
+      } else {
+        res.status(200).json(response);
+      }
+    });
+  });
+
   // Delete course
   router.delete('/course/:id', (req, res) => {
     Course.findById(req.params.id)

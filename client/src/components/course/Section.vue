@@ -27,14 +27,17 @@ export default {
   },
   methods: {
     getUnit() {
-      var vm = this;
+      const vm = this;
       this.$http
-        .get('/section/' + vm.section._id + '/resources')
+        .get(`/section/${vm.section._id}/resources`)
         .then(response => {
           vm.resources = response.data.resources;
         })
         .catch(err => {
-          console.log('Error: ' + err);
+          this.$store.dispatch(
+            'openErrorBar',
+            'An error occurred loading the section: ' + vm.section.title,
+          );
         });
     },
   },

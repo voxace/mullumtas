@@ -6,7 +6,8 @@
   <v-spacer></v-spacer>
   <v-toolbar-items>
 
-    <v-switch v-if="admin" label="Editing" color="yellow darken-1" v-model="editing" @click.native="toggle" class="my-3 mr-3"></v-switch>
+    <v-switch v-if="admin" color="yellow darken-1" v-model="editing" @click.native="toggle" class="my-3 mr-1"></v-switch>
+    <p class="subheading edit-label" v-bind:class="{dim: !editing}">Editing</p>
 
     <v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
       <v-btn icon flat slot="activator">
@@ -50,8 +51,8 @@ export default {
   },
   data() {
     return {
-      admin: true,
-      items: [{
+      items: [
+        {
           icon: 'account_circle',
           href: '#',
           title: 'Profile',
@@ -85,12 +86,15 @@ export default {
   },
   computed: {
     editing: {
-      get: function() {
+      get() {
         return this.$store.getters.isEditing;
       },
-      set: function(newValue) {
+      set(newValue) {
         // Do nothing
       },
+    },
+    admin() {
+      return this.$store.getters.isAdmin;
     },
   },
 };
@@ -102,5 +106,14 @@ a:visited,
 a:hover {
   color: white;
   text-decoration: none;
+}
+
+.edit-label {
+  margin-top: 20px !important;
+  margin-right: 6px;
+}
+
+.dim {
+  opacity: 0.4 !important;
 }
 </style>

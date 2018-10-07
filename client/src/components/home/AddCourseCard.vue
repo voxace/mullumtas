@@ -58,7 +58,7 @@ export default {
   }),
   methods: {
     submit() {
-      var vm = this;
+      const vm = this;
       if (this.$refs.form.validate()) {
         vm.loading = true;
         this.$http
@@ -67,7 +67,7 @@ export default {
             grade: vm.grade,
             short: vm.short.toUpperCase(),
           })
-          .then(response => {
+          .then((response) => {
             if (response.data.title == vm.title && response.data._id.length > 0) {
               this.$store.dispatch('openSuccessBar', 'Save Successful');
               this.$emit('added');
@@ -75,7 +75,7 @@ export default {
               vm.loading = false;
             }
           })
-          .catch(err => {
+          .catch((err) => {
             this.$store.dispatch('openErrorBar', 'Error Saving Course');
             vm.loading = false;
           });

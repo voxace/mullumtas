@@ -1,7 +1,8 @@
 import Vue from 'vue';
 
 const state = {
-  editing: true,
+  editing: false,
+  admin: true,
   snackbar: false,
   snackbarColor: 'success',
   snackbarMessage: 'Message',
@@ -9,6 +10,7 @@ const state = {
 
 const getters = {
   isEditing: state => state.editing,
+  isAdmin: state => state.admin,
   snackbar: state => state.snackbar,
   snackbarColor: state => state.snackbarColor,
   snackbarMessage: state => state.snackbarMessage,

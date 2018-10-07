@@ -20,38 +20,31 @@
 export default {
   name: 'resource',
   props: ['resource'],
-  data() {
-    return {
-      resource: {},
-    };
-  },
   computed: {
     icon() {
       if (this.resource.type == 'doc') {
         return 'mdi-file-document-box';
-      }
-      if (this.resource.type == 'slide') {
+      } else if (this.resource.type == 'slide') {
         return 'mdi-file-presentation-box';
-      }
-      if (this.resource.type == 'quiz') {
+      } else if (this.resource.type == 'quiz') {
         return 'mdi-file-question';
-      }
-      if (this.resource.type == 'url') {
+      } else if (this.resource.type == 'url') {
         return 'mdi-link';
+      } else {
+        return 'mdi-file-document-box';
       }
     },
     colors() {
       if (this.resource.type == 'doc') {
         return ['blue', 'white--text'];
-      }
-      if (this.resource.type == 'slide') {
+      } else if (this.resource.type == 'slide') {
         return ['orange', 'lighten-1', 'white--text'];
-      }
-      if (this.resource.type == 'quiz') {
+      } else if (this.resource.type == 'quiz') {
         return ['blue', 'darken-2', 'white--text'];
-      }
-      if (this.resource.type == 'url') {
+      } else if (this.resource.type == 'url') {
         return ['green', 'white--text'];
+      } else {
+        return ['red', 'white--text'];
       }
     },
     avatarSize() {

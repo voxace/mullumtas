@@ -32,10 +32,10 @@ export default {
   },
   computed: {
     snackbar: {
-      get: function() {
+      get() {
         return this.$store.getters.snackbar;
       },
-      set: function() {
+      set() {
         this.$store.commit('closeSnackBar');
       },
     },

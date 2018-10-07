@@ -11,6 +11,7 @@ import config from '../config';
 Vue.config.productionTip = false;
 
 axios.defaults.baseURL = config.baseURL;
+axios.defaults.timeout = 2000;
 Vue.use(VueAxios, axios);
 
 new Vue({

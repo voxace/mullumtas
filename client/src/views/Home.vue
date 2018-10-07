@@ -47,17 +47,17 @@ export default {
   },
   methods: {
     getCourses() {
-      var vm = this;
+      const vm = this;
       this.$http
         .get('/courses')
         .then(response => {
           vm.courses = response.data;
         })
         .catch(err => {
-          console.log('Error: ' + err);
+          this.$store.dispatch('openErrorBar', 'An error occurred loading the courses');
         });
     },
-    deleteCourse: function(course) {
+    deleteCourse(course) {
       this.courseToDelete = course;
     },
     refreshCourses() {
