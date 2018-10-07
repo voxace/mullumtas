@@ -6,15 +6,11 @@ import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import config from './config';
 
 Vue.config.productionTip = false;
 
-if (process.env.VUE_APP_BASE) {
-  axios.defaults.baseURL = process.env.VUE_APP_BASE;
-} else {
-  axios.defaults.baseURL = 'http://159.65.107.105:3001/api';
-}
-
+axios.defaults.baseURL = config.baseURL;
 Vue.use(VueAxios, axios);
 
 new Vue({
