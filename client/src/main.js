@@ -12,7 +12,7 @@ Vue.config.productionTip = false;
 if (process.env.VUE_APP_BASE) {
   axios.defaults.baseURL = process.env.VUE_APP_BASE;
 } else {
-  axios.defaults.baseURL = 'http://159.65.107.105:3000/api';
+  axios.defaults.baseURL = 'http://159.65.107.105:3001/api';
 }
 
 Vue.use(VueAxios, axios);
