@@ -2,15 +2,10 @@
 <v-expansion-panel-content>
 
   <v-layout slot="header" align-center justify-space-between>
-    <h3 class="headline mt-2 mb-0 pa-2">{{ order }} - {{ unit.title }}</h3>
-    <span v-if="editing" class="group mt-1 pa-0 mr-4">
-      <v-btn flat icon color="error" @click.stop="">
-        <v-icon>delete</v-icon>
-      </v-btn>
-      <v-btn flat icon color="indigo" @click.stop="">
-        <v-icon>edit</v-icon>
-      </v-btn>
-    </span>
+    <h3 class="title mt-2 mb-0 pa-2">{{ order }} - {{ unit.title }}</h3>
+    <v-btn v-if="editing" flat icon color="indigo" class="mt-2 mb-0 pa-0 mr-4" @click.stop="">
+      <v-icon>edit</v-icon>
+    </v-btn>
     <h4 v-else class="subheading mt-2 mr-4">7/7</h4>
   </v-layout>
 
