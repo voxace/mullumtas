@@ -9,7 +9,11 @@ import store from './store';
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = process.env.VUE_APP_BASE;
+if (process.env.VUE_APP_BASE) {
+  axios.defaults.baseURL = process.env.VUE_APP_BASE;
+} else {
+  axios.defaults.baseURL = 'http://159.65.107.105:3000/api';
+}
 
 Vue.use(VueAxios, axios);
 

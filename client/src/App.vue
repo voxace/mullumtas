@@ -46,6 +46,9 @@ export default {
       return this.$store.getters.snackbarColor;
     },
   },
+  mounted() {
+    alert(process.env.VUE_APP_BASE);
+  },
 };
 </script>
 
