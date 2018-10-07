@@ -1,7 +1,7 @@
 <template>
 <div class="course">
   <app-course-bar :title="course.title" />
-  <v-container fluid fill-height grid-list-lg>
+  <v-container fluid grid-list-lg style="margin-top: 135px;">
     <v-layout row wrap>
       <v-expansion-panel>
         <app-unit v-for="item in course.units" :key="item._id" :unit="item" />

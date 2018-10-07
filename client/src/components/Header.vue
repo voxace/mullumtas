@@ -1,5 +1,5 @@
 <template>
-<v-toolbar color="indigo" dark app>
+<v-toolbar color="indigo" dark app style="z-index: 1000;">
   <router-link to="/" exact>
     <v-toolbar-title>MullumTAS</v-toolbar-title>
   </router-link>

@@ -2,7 +2,7 @@
 <v-list class="mb-0 pb-0" subheader>
 
   <v-subheader>
-    <h2>{{ section.title }}</h2>
+    <h2 class="title">{{ section.title }}</h2>
   </v-subheader>
 
   <app-resource v-for="item in resources" :key="item_id" :resource="item" />

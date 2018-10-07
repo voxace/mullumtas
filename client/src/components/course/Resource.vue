@@ -1,12 +1,12 @@
 <template>
 <v-list-tile @click="">
 
-  <v-list-tile-avatar size="28">
-    <v-icon size="22" :class="[colors]">{{ icon }}</v-icon>
+  <v-list-tile-avatar :size="avatarSize">
+    <v-icon :size="iconSize" :class="[colors]">{{ icon }}</v-icon>
   </v-list-tile-avatar>
 
   <v-list-tile-content>
-    {{ resource.title }}
+    <span class="body-1">{{ resource.title }}</span>
   </v-list-tile-content>
 
   <v-list-tile-action>
@@ -52,6 +52,26 @@ export default {
       }
       if (this.resource.type == 'url') {
         return ['green', 'white--text'];
+      }
+    },
+    avatarSize() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return '22';
+          break;
+        default:
+          return '26';
+          break;
+      }
+    },
+    iconSize() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return '16';
+          break;
+        default:
+          return '20';
+          break;
       }
     },
   },

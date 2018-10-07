@@ -50,6 +50,45 @@ export default {
 </script>
 
 <style>
+@media only screen and (max-width: 600px) {
+  .display-3 {
+    font-size: 38px !important;
+  }
+
+  .display-2 {
+    font-size: 30px !important;
+  }
+
+  .display-1 {
+    font-size: 24px !important;
+  }
+
+  .headline {
+    font-size: 18px !important;
+    font-weight: 700;
+  }
+
+  .title {
+    font-size: 16px !important;
+    font-weight: 700;
+  }
+
+  .subheading {
+    font-size: 16px !important;
+    font-weight: 300;
+  }
+
+  .body-1 {
+    font-size: 12px !important;
+    font-weight: 400;
+  }
+
+  .body-2 {
+    font-size: 12px !important;
+    font-weight: 700;
+  }
+}
+
 .fade-enter-active {
   transition: opacity 1s;
 }

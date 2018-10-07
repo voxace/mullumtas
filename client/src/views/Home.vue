@@ -1,7 +1,8 @@
 <template>
 <div class="home">
   <app-course-bar />
-  <v-container fluid fill-height grid-list-lg>
+
+  <v-container fluid fill-height grid-list-lg style="margin-top: 135px;">
     <v-layout row wrap>
       <app-course-card v-for="item in courses" :key="item.id" :course="item" @delete="deleteCourse" @delete2="deleteDialog = true" />
     </v-layout>
