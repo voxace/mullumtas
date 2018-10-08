@@ -3,6 +3,12 @@
 
   <v-subheader>
     <h2 class="title">{{ section.title }}</h2>
+    <v-tooltip right v-if="editing">
+      <v-btn slot="activator" flat icon color="indigo" class="" @click.stop="editDialog = true">
+        <v-icon>edit</v-icon>
+      </v-btn>
+      <span>Edit Section</span>
+    </v-tooltip>
   </v-subheader>
 
   <app-resource v-for="item in resources" :key="item_id" :resource="item" />
@@ -39,6 +45,11 @@ export default {
             'An error occurred loading the section: ' + vm.section.title,
           );
         });
+    },
+  },
+  computed: {
+    editing() {
+      return this.$store.getters.isEditing;
     },
   },
   created() {

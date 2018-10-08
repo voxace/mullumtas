@@ -69,18 +69,21 @@ module.exports = function (router) {
       })
       .exec()
       .then((unit) => {
-        console.log(unit.title);
         unit.sections.forEach((section) => {
-          console.log(section.title);
           section.resources.forEach((resource) => {
-            console.log(resource.title);
-            // TODO: delete resource
+            Resource.deleteOne({ _id: resource._id }, (err) => {
+              if (err) return handleError(err);
+              console.log(`Deleted: ${resource.title}`);
+            });
           });
-          // TODO: delete section
+          Section.deleteOne({ _id: section._id }, (err) => {
+            if (err) return handleError(err);
+            console.log(`Deleted: ${section.title}`);
+          });
         });
-        // TODO: delete unit
         Unit.deleteOne({ _id: unit._id }, (err) => {
           if (err) return handleError(err);
+          console.log(`Deleted: ${unit.title}`);
         });
         res.status(200).json('success');
       })

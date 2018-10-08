@@ -9,13 +9,25 @@
     </v-layout>
   </v-container>
 
-  <v-btn fab dark bottom right fixed color="indigo" v-if="editing" @click.stop="addDialog = true">
-    <v-icon>add</v-icon>
-  </v-btn>
-
   <v-dialog v-model="addDialog" width="500">
     <app-add-unit @closed="addDialog = false" @added="getCourse" :course="course" />
   </v-dialog>
+
+  <v-speed-dial v-if="editing" v-model="fab" bottom right fixed direction="left" transition="slide-x-reverse-transition">
+    <v-btn slot="activator" v-model="fab" color="indigo" dark fab>
+      <v-icon>add</v-icon>
+      <v-icon>close</v-icon>
+    </v-btn>
+    <v-btn dark round small color="indigo" class="ml-1 pl-0" @click="addDialog = true">
+      Unit
+    </v-btn>
+    <v-btn dark round small color="indigo" class="mx-1 px-0">
+      Section
+    </v-btn>
+    <v-btn dark round small color="indigo" class="mr-1">
+      Resource
+    </v-btn>
+  </v-speed-dial>
 
 </div>
 </template>
@@ -35,6 +47,7 @@ export default {
   },
   data() {
     return {
+      fab: false,
       course: {},
       addDialog: false,
       unitToDelete: {},

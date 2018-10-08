@@ -10,7 +10,13 @@
   </v-list-tile-content>
 
   <v-list-tile-action>
-    <v-checkbox></v-checkbox>
+    <v-tooltip left v-if="editing">
+      <v-btn slot="activator" flat icon color="indigo" class="mr-4" @click.stop="editDialog = true">
+        <v-icon>edit</v-icon>
+      </v-btn>
+      <span>Edit Resource</span>
+    </v-tooltip>
+    <v-checkbox v-else></v-checkbox>
   </v-list-tile-action>
 
 </v-list-tile>
@@ -66,6 +72,12 @@ export default {
           return '20';
           break;
       }
+    },
+    editing() {
+      return this.$store.getters.isEditing;
+    },
+    admin() {
+      return this.$store.getters.isAdmin;
     },
   },
 };

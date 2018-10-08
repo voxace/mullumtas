@@ -14,7 +14,7 @@
             <v-text-field label="Grade" placeholder="Grade" v-model="grade" required :rules="gradeRules"></v-text-field>
           </v-flex>
           <v-flex xs12 sm6 d-flex>
-            <v-text-field label="Grade" placeholder="Short Name" v-model="short" required :rules="shortRules"></v-text-field>
+            <v-text-field label="Short Name" placeholder="Short Name" v-model="short" required :rules="shortRules"></v-text-field>
           </v-flex>
           <v-flex xs12 d-flex>
             <v-text-field label="Title" placeholder="Title" v-model="title" required :rules="titleRules"></v-text-field>
@@ -67,7 +67,7 @@ export default {
             grade: vm.grade,
             short: vm.short.toUpperCase(),
           })
-          .then((response) => {
+          .then(response => {
             if (response.data.title == vm.title && response.data._id.length > 0) {
               this.$store.dispatch('openSuccessBar', 'Save Successful');
               this.$emit('added');
@@ -75,7 +75,7 @@ export default {
               vm.loading = false;
             }
           })
-          .catch((err) => {
+          .catch(err => {
             this.$store.dispatch('openErrorBar', 'Error Saving Course');
             vm.loading = false;
           });

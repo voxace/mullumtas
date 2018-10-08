@@ -4,20 +4,20 @@
 
   <v-container fluid fill-height grid-list-lg style="margin-top: 135px; margin-bottom: 40px;">
     <v-layout row wrap>
-      <app-course-card v-for="item in courses" :key="item.id" :course="item" @delete="deleteCourse" @delete2="deleteDialog = true" />
+      <app-course-card v-for="item in courses" :key="item.id" :course="item" @edit="editCourse" @edit2="editDialog = true" />
     </v-layout>
   </v-container>
 
-  <v-btn fab dark bottom right fixed color="indigo" v-if="editing" @click.stop="dialog = true">
+  <v-btn fab dark bottom right fixed color="indigo" v-if="editing" @click.stop="addDialog = true">
     <v-icon>add</v-icon>
   </v-btn>
 
-  <v-dialog v-model="dialog" width="500">
-    <app-add-course-card @closed="dialog = false" @added="getCourses" />
+  <v-dialog v-model="addDialog" width="500">
+    <app-add-course @closed="addDialog = false" @added="getCourses" />
   </v-dialog>
 
-  <v-dialog v-model="deleteDialog" width="500">
-    <app-delete-course @closed="deleteDialog = false" @deleted="refreshCourses" :course="courseToDelete" />
+  <v-dialog v-model="editDialog" width="500">
+    <app-edit-course @closed="editDialog = false" @edited="refreshCourses" :course="courseToEdit" />
   </v-dialog>
 
 </div>
@@ -26,24 +26,24 @@
 <script>
 import CourseBar from '@/components/home/CourseBar.vue';
 import CourseCard from '@/components/home/CourseCard.vue';
-import AddCourseCard from '@/components/home/AddCourseCard.vue';
-import DeleteCourse from '@/components/home/DeleteCourse.vue';
+import AddCourse from '@/components/home/AddCourse.vue';
+import EditCourse from '@/components/home/EditCourse.vue';
 
 export default {
   name: 'home',
   data() {
     return {
       courses: [],
-      dialog: false,
-      deleteDialog: false,
-      courseToDelete: {},
+      addDialog: false,
+      editDialog: false,
+      courseToEdit: {},
     };
   },
   components: {
     appCourseBar: CourseBar,
     appCourseCard: CourseCard,
-    appAddCourseCard: AddCourseCard,
-    appDeleteCourse: DeleteCourse,
+    appAddCourse: AddCourse,
+    appEditCourse: EditCourse,
   },
   methods: {
     getCourses() {
@@ -57,8 +57,8 @@ export default {
           this.$store.dispatch('openErrorBar', 'An error occurred loading the courses');
         });
     },
-    deleteCourse(course) {
-      this.courseToDelete = course;
+    editCourse(course) {
+      this.courseToEdit = course;
     },
     refreshCourses() {
       setTimeout(this.getCourses(), 500);

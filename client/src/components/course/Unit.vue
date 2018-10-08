@@ -3,9 +3,12 @@
 
   <v-layout slot="header" align-center justify-space-between>
     <h3 class="title mt-2 mb-0 pa-2">{{ order }} - {{ unit.title }}</h3>
-    <v-btn v-if="editing" flat icon color="indigo" class="mt-2 mb-0 pa-0 mr-4" @click.stop="editDialog = true">
-      <v-icon>edit</v-icon>
-    </v-btn>
+    <v-tooltip left v-if="editing">
+      <v-btn slot="activator" flat icon color="indigo" class="mt-2 mb-0 pa-0 mr-4" @click.stop="editDialog = true">
+        <v-icon>edit</v-icon>
+      </v-btn>
+      <span>Edit Unit</span>
+    </v-tooltip>
     <h4 v-else class="subheading mt-2 mr-4">7/7</h4>
   </v-layout>
 

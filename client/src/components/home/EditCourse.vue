@@ -10,24 +10,27 @@
 
       <v-container fluid grid-list-xl class="my-1 py-1">
         <v-layout wrap align-center>
-          <v-flex xs12 d-flex>
-            <v-text-field label="Unit Number" v-model="unit.order" required :rules="orderRules" autofocus="true"></v-text-field>
+          <v-flex xs12 sm6 d-flex>
+            <v-text-field label="Grade" v-model="course.grade" required :rules="gradeRules"></v-text-field>
+          </v-flex>
+          <v-flex xs12 sm6 d-flex>
+            <v-text-field label="Short Name" v-model="course.short" required :rules="shortRules"></v-text-field>
           </v-flex>
           <v-flex xs12 d-flex>
-            <v-text-field label="Unit Title" v-model="unit.title" required :rules="titleRules"></v-text-field>
+            <v-text-field label="Title" v-model="course.title" required :rules="titleRules"></v-text-field>
           </v-flex>
         </v-layout>
       </v-container>
 
       <v-card-actions class="align-center justify-center">
-        <v-btn :loading="loading" :disabled="!valid" color="success" class="white--text" @click.stop="saveUnit">
-          <v-icon left dark class="hidden-xs-only">save</v-icon> Save
+        <v-btn :loading="loading" :disabled="!valid" color="success" class="white--text" @click.stop="saveCourse">
+          <v-icon left dark>save</v-icon> Save
         </v-btn>
-        <v-btn :loading="loading" color="error" class="white--text" @click.stop="deleteUnit">
-          <v-icon left dark class="hidden-xs-only">delete</v-icon> Delete
+        <v-btn :loading="loading" color="error" class="white--text" @click.stop="deleteCourse">
+          <v-icon left dark>delete</v-icon> Delete
         </v-btn>
         <v-btn :loading="loading" color="indigo" class="white--text" @click.stop="closeDialog">
-          <v-icon left dark class="hidden-xs-only">close</v-icon> Close
+          <v-icon left dark>close</v-icon> Close
         </v-btn>
       </v-card-actions>
 
@@ -39,23 +42,30 @@
 
 <script>
 export default {
-  props: ['unit'],
+  props: ['course'],
   data: () => ({
-    valid: false,
+    valid: true,
     loading: false,
-    orderRules: [
-      v => !!v || 'Unit Number is required',
-      v => (!isNaN(v) && v >= 1 && v < 100) || 'Unit Number must be between 1 and 99',
+    grade: '',
+    gradeRules: [
+      v => !!v || 'Grade is required',
+      v => (!isNaN(v) && v >= 7 && v <= 12) || 'Must be a number between 7 and 12',
     ],
-    titleRules: [v => !!v || 'Unit Title is required'],
+    short: '',
+    shortRules: [
+      v => !!v || 'Short Name is required',
+      v => (v && v.length <= 5) || 'Short Name must be less than 6 characters',
+    ],
+    title: '',
+    titleRules: [v => !!v || 'Title is required'],
   }),
   methods: {
-    saveUnit() {
+    saveCourse() {
       const vm = this;
       if (this.$refs.form.validate()) {
         vm.loading = true;
         this.$http
-          .put('/unit/' + vm.unit._id, vm.unit)
+          .put('/course/' + vm.course._id, vm.course)
           .then(response => {
             this.$store.dispatch('openSuccessBar', 'Update Successful');
             this.$emit('edited');
@@ -63,16 +73,16 @@ export default {
             vm.loading = false;
           })
           .catch(err => {
-            this.$store.dispatch('openErrorBar', 'Error Updating Unit');
+            this.$store.dispatch('openErrorBar', 'Error Updating Course');
             vm.loading = false;
           });
       }
     },
-    deleteUnit() {
+    deleteCourse() {
       const vm = this;
       vm.loading = true;
       this.$http
-        .delete('/unit/' + vm.unit._id)
+        .delete('/course/' + vm.course._id)
         .then(response => {
           this.$store.dispatch('openSuccessBar', 'Delete Successful');
           this.$emit('edited');

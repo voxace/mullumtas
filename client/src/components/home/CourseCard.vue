@@ -8,7 +8,7 @@
       <h3 class="headline my-3">{{ course.title }}</h3>
       <v-card-actions class="align-center justify-center">
         <v-btn flat color="indigo">Access Course</v-btn>
-        <v-btn to="/" exact active-class="" v-if="editing" flat color="error" @click="deleteCourse">Delete</v-btn>
+        <v-btn to="/" exact active-class="" v-if="editing" flat color="error" @click="editCourse">Edit</v-btn>
       </v-card-actions>
     </v-card-text>
   </v-card>
@@ -24,9 +24,9 @@ export default {
     },
   },
   methods: {
-    deleteCourse() {
-      this.$emit('delete', this.course);
-      this.$emit('delete2');
+    editCourse() {
+      this.$emit('edit', this.course);
+      this.$emit('edit2');
     },
   },
 };
