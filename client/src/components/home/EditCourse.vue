@@ -3,7 +3,7 @@
   <v-form ref="form" v-model="valid">
 
     <v-card-title primary-title class="align-center justify-center grey lighten-2">
-      <h1 class="display-3">Edit Unit</h1>
+      <h1 class="display-3">Edit Course</h1>
     </v-card-title>
 
     <v-card-text class="text-xs-center">
@@ -24,13 +24,13 @@
 
       <v-card-actions class="align-center justify-center">
         <v-btn :loading="loading" :disabled="!valid" color="success" class="white--text" @click.stop="saveCourse">
-          <v-icon left dark>save</v-icon> Save
+          <v-icon left dark class="hidden-xs-only">save</v-icon> Save
         </v-btn>
         <v-btn :loading="loading" color="error" class="white--text" @click.stop="deleteCourse">
-          <v-icon left dark>delete</v-icon> Delete
+          <v-icon left dark class="hidden-xs-only">delete</v-icon> Delete
         </v-btn>
         <v-btn :loading="loading" color="indigo" class="white--text" @click.stop="closeDialog">
-          <v-icon left dark>close</v-icon> Close
+          <v-icon left dark class="hidden-xs-only">close</v-icon> Close
         </v-btn>
       </v-card-actions>
 
