@@ -15,7 +15,7 @@ module.exports = function (router) {
   // Get all resources in a section
   router.get('/section/:id/resources', (req, res) => {
     Section.findById(req.params.id)
-      .populate('resources')
+      .populate({ path: 'resources', options: { sort: { order: 1 } } })
       .exec()
       .then(data => res.status(200).json(data))
       .catch(err => res.status(500).json({

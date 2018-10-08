@@ -50,7 +50,7 @@ module.exports = function (router) {
   // Get all units in a course
   router.get('/course/short/:title/units', (req, res) => {
     Course.findOne({ short: req.params.title })
-      .populate('units')
+      .populate({ path: 'units', options: { sort: { order: 1 } } })
       .exec()
       .then(data => res.status(200).json(data))
       .catch(err => res.status(500).json({
@@ -72,7 +72,7 @@ module.exports = function (router) {
     });
   });
 
-  // Update user document...
+  // Update course
   router.put('/course/:id', (req, res) => {
     const qry = { _id: req.params.id };
     const course = req.body;
@@ -84,6 +84,22 @@ module.exports = function (router) {
         res.status(200).json(response);
       }
     });
+  });
+
+  // Add unit to course
+  router.patch('/course/:courseID/unit/:unitID', (req, res) => {
+    Course.update(
+      { _id: req.params.courseID },
+      { $push: { units: req.params.unitID } },
+      (err, response) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send({ error: 'Something went wrong!' });
+        } else {
+          res.status(200).json(response);
+        }
+      },
+    );
   });
 
   // Delete course

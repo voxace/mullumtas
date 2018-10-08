@@ -3,7 +3,7 @@
 
   <v-layout slot="header" align-center justify-space-between>
     <h3 class="title mt-2 mb-0 pa-2">{{ order }} - {{ unit.title }}</h3>
-    <v-btn v-if="editing" flat icon color="indigo" class="mt-2 mb-0 pa-0 mr-4" @click.stop="">
+    <v-btn v-if="editing" flat icon color="indigo" class="mt-2 mb-0 pa-0 mr-4" @click.stop="editDialog = true">
       <v-icon>edit</v-icon>
     </v-btn>
     <h4 v-else class="subheading mt-2 mr-4">7/7</h4>
@@ -14,22 +14,28 @@
     <app-section v-for="item in sections" :key="item._id" :section="item" />
   </v-card>
 
+  <v-dialog v-model="editDialog" width="500">
+    <app-edit-unit @closed="editDialog = false" @edited="refreshUnit" :unit="unit" />
+  </v-dialog>
+
 </v-expansion-panel-content>
 </template>
 
 <script>
 import Section from '@/components/course/Section.vue';
+import EditUnit from '@/components/course/EditUnit.vue';
 
 export default {
   name: 'unit',
   props: ['unit'],
   components: {
     appSection: Section,
+    appEditUnit: EditUnit,
   },
   data() {
     return {
-      unit: {},
       sections: {},
+      editDialog: false,
     };
   },
   methods: {
@@ -46,6 +52,9 @@ export default {
             'An error occurred loading the unit: ' + vm.unit.title,
           );
         });
+    },
+    refreshUnit() {
+      this.$emit('edited');
     },
   },
   computed: {

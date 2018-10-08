@@ -23,7 +23,7 @@
         <v-btn :loading="loading" :disabled="!valid" color="success" class="white--text" @click.prevent="submit">
           <v-icon left dark>add</v-icon> Add
         </v-btn>
-        <v-btn :loading="loading" color="error" class="white--text" @click.stop="closeDialog">
+        <v-btn :loading="loading" color="indigo" class="white--text" @click.stop="closeDialog">
           <v-icon left dark>close</v-icon> Close
         </v-btn>
       </v-card-actions>
@@ -52,7 +52,6 @@ export default {
   methods: {
     submit() {
       const vm = this;
-      let updatedCourse = JSON.parse(JSON.stringify(vm.course)); // Clone course
       if (this.$refs.form.validate()) {
         vm.loading = true;
         this.$http
@@ -62,14 +61,15 @@ export default {
           })
           .then(response => {
             if (response.data._id.length > 0) {
-              updatedCourse.units.push(response.data._id);
               this.$http
-                .put('/course/' + updatedCourse._id, updatedCourse)
+                .patch('/course/' + vm.course._id + '/unit/' + response.data._id)
                 .then(response2 => {
                   if (response2.data.n == 1) {
                     this.$store.dispatch('openSuccessBar', 'Save Successful');
                     this.$emit('added');
                     this.$emit('closed');
+                    vm.title = '';
+                    vm.order = '';
                     vm.loading = false;
                   }
                 })
