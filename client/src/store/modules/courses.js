@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 const state = {
-  editing: false,
+  editing: true,
   admin: true,
   snackbar: false,
   snackbarColor: 'success',

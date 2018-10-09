@@ -1,8 +1,8 @@
 <template>
-<div class="home">
+<v-content>
   <app-course-bar />
 
-  <v-container fluid fill-height grid-list-lg style="margin-top: 135px; margin-bottom: 40px;">
+  <v-container fluid fill-height grid-list-lg>
     <v-layout row wrap>
       <app-course-card v-for="item in courses" :key="item.id" :course="item" @edit="editCourse" @edit2="editDialog = true" />
     </v-layout>
@@ -20,7 +20,7 @@
     <app-edit-course @closed="editDialog = false" @edited="refreshCourses" :course="courseToEdit" />
   </v-dialog>
 
-</div>
+</v-content>
 </template>
 
 <script>

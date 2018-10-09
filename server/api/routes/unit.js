@@ -44,7 +44,7 @@ module.exports = function (router) {
     });
   });
 
-  // Update course
+  // Update unit
   router.put('/unit/:id', (req, res) => {
     const qry = { _id: req.params.id };
     const unit = req.body;
@@ -58,7 +58,23 @@ module.exports = function (router) {
     });
   });
 
-  // Delete course
+  // Add section to unit
+  router.patch('/unit/:unitID/section/:sectionID', (req, res) => {
+    Unit.update(
+      { _id: req.params.unitID },
+      { $push: { sections: req.params.sectionID } },
+      (err, response) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send({ error: 'Something went wrong!' });
+        } else {
+          res.status(200).json(response);
+        }
+      },
+    );
+  });
+
+  // Delete unit
   router.delete('/unit/:id', (req, res) => {
     Unit.findById(req.params.id)
       .populate({

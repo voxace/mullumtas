@@ -2,7 +2,7 @@
 <v-list class="mb-0 pb-0" subheader>
 
   <v-subheader>
-    <h2 class="title">{{ section.title }}</h2>
+    <h2 class="title"><span v-if="editing">{{ order }} - </span>{{ section.title }}</h2>
     <v-tooltip right v-if="editing">
       <v-btn slot="activator" flat icon color="indigo" class="" @click.stop="editDialog = true">
         <v-icon>edit</v-icon>
@@ -11,7 +11,7 @@
     </v-tooltip>
   </v-subheader>
 
-  <app-resource v-for="item in resources" :key="item_id" :resource="item" />
+  <app-resource v-for="item in resources" :key="item_id" :resource="item" class="pl-2" />
 
 </v-list>
 </template>
@@ -25,14 +25,8 @@ export default {
   components: {
     appResource: Resource,
   },
-  data() {
-    return {
-      section: {},
-      resources: {},
-    };
-  },
   methods: {
-    getUnit() {
+    getSection() {
       const vm = this;
       this.$http
         .get(`/section/${vm.section._id}/resources`)
@@ -51,9 +45,17 @@ export default {
     editing() {
       return this.$store.getters.isEditing;
     },
+    resources() {
+      return this.section.resources;
+    },
+    order() {
+      let s = this.section.order + '';
+      while (s.length < 2) s = '0' + s;
+      return s;
+    },
   },
   created() {
-    this.getUnit();
+    //this.getSection();
   },
 };
 </script>

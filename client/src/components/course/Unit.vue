@@ -14,7 +14,7 @@
 
   <v-card>
     <v-divider></v-divider>
-    <app-section v-for="item in sections" :key="item._id" :section="item" />
+    <app-section v-for="item in sections" :key="item._id" :section="item" @edited="refreshUnit" />
   </v-card>
 
   <v-dialog v-model="editDialog" width="500">
@@ -37,25 +37,24 @@ export default {
   },
   data() {
     return {
-      sections: {},
       editDialog: false,
     };
   },
   methods: {
-    getUnit() {
-      const vm = this;
-      this.$http
-        .get(`/unit/${vm.unit._id}/sections`)
-        .then(response => {
-          vm.sections = response.data.sections;
-        })
-        .catch(err => {
-          this.$store.dispatch(
-            'openErrorBar',
-            'An error occurred loading the unit: ' + vm.unit.title,
-          );
-        });
-    },
+    // getUnit() {
+    //   const vm = this;
+    //   this.$http
+    //     .get(`/unit/${vm.unit._id}/sections`)
+    //     .then(response => {
+    //       vm.sections = response.data.sections;
+    //     })
+    //     .catch(err => {
+    //       this.$store.dispatch(
+    //         'openErrorBar',
+    //         'An error occurred loading the unit: ' + vm.unit.title,
+    //       );
+    //     });
+    // },
     refreshUnit() {
       this.$emit('edited');
     },
@@ -72,9 +71,9 @@ export default {
     admin() {
       return this.$store.getters.isAdmin;
     },
-  },
-  created() {
-    this.getUnit();
+    sections() {
+      return this.unit.sections;
+    },
   },
 };
 </script>

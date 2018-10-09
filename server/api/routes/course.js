@@ -50,7 +50,18 @@ module.exports = function (router) {
   // Get all units in a course
   router.get('/course/short/:title/units', (req, res) => {
     Course.findOne({ short: req.params.title })
-      .populate({ path: 'units', options: { sort: { order: 1 } } })
+      .populate({
+        path: 'units',
+        options: { sort: { order: 1 } },
+        populate: {
+          path: 'sections',
+          options: { sort: { order: 1 } },
+          populate: {
+            path: 'resources',
+            options: { sort: { order: 1 } },
+          },
+        },
+      })
       .exec()
       .then(data => res.status(200).json(data))
       .catch(err => res.status(500).json({

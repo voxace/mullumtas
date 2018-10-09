@@ -28,8 +28,42 @@ module.exports = function (router) {
   router.post('/section', (req, res) => {
     const section = new Section(req.body);
     section.save((err, data) => {
-      if (err) return console.log(err);
-      res.status(200).json(data);
+      if (err) {
+        console.log(err.message);
+        res.status(500).send({ error: 'Something went wrong!' });
+      } else {
+        res.status(200).json(data);
+      }
     });
+  });
+
+  // Update section
+  router.put('/section/:id', (req, res) => {
+    const qry = { _id: req.params.id };
+    const section = req.body;
+    Section.update(qry, course, (err, response) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send({ error: 'Something went wrong!' });
+      } else {
+        res.status(200).json(response);
+      }
+    });
+  });
+
+  // Add resource to section
+  router.patch('/section/:sectionID/resource/:resourceID', (req, res) => {
+    Section.update(
+      { _id: req.params.sectionID },
+      { $push: { resources: req.params.resourceID } },
+      (err, response) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send({ error: 'Something went wrong!' });
+        } else {
+          res.status(200).json(response);
+        }
+      },
+    );
   });
 };

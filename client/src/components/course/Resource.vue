@@ -6,7 +6,7 @@
   </v-list-tile-avatar>
 
   <v-list-tile-content>
-    <span class="body-1">{{ resource.title }}</span>
+    <span class="body-1"><span v-if="editing">{{ order }} - </span>{{ resource.title }}</span>
   </v-list-tile-content>
 
   <v-list-tile-action>
@@ -78,6 +78,11 @@ export default {
     },
     admin() {
       return this.$store.getters.isAdmin;
+    },
+    order() {
+      let s = this.resource.order + '';
+      while (s.length < 2) s = '0' + s;
+      return s;
     },
   },
 };
