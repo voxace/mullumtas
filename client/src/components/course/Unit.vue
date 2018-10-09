@@ -41,20 +41,6 @@ export default {
     };
   },
   methods: {
-    // getUnit() {
-    //   const vm = this;
-    //   this.$http
-    //     .get(`/unit/${vm.unit._id}/sections`)
-    //     .then(response => {
-    //       vm.sections = response.data.sections;
-    //     })
-    //     .catch(err => {
-    //       this.$store.dispatch(
-    //         'openErrorBar',
-    //         'An error occurred loading the unit: ' + vm.unit.title,
-    //       );
-    //     });
-    // },
     refreshUnit() {
       this.$emit('edited');
     },

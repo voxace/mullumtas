@@ -1,5 +1,7 @@
 const Course = require('../../models/course');
 const Unit = require('../../models/unit');
+const Section = require('../../models/section');
+const Resource = require('../../models/resource');
 
 module.exports = function (router) {
   // Get course by ID
@@ -132,22 +134,22 @@ module.exports = function (router) {
             section.resources.forEach((resource) => {
               Resource.deleteOne({ _id: resource._id }, (err) => {
                 if (err) return handleError(err);
-                console.log(`Deleted: ${resource.title}`);
+                console.log(`Deleted Resource: ${resource.title}`);
               });
             });
             Section.deleteOne({ _id: section._id }, (err) => {
               if (err) return handleError(err);
-              console.log(`Deleted: ${section.title}`);
+              console.log(`Deleted Title: ${section.title}`);
             });
           });
           Unit.deleteOne({ _id: unit._id }, (err) => {
             if (err) return handleError(err);
-            console.log(`Deleted: ${unit.title}`);
+            console.log(`Deleted Unit: ${unit.title}`);
           });
         });
         Course.deleteOne({ _id: course._id }, (err) => {
           if (err) return handleError(err);
-          console.log(`Deleted: ${course.title}`);
+          console.log(`Deleted Course: ${course.title}`);
         });
         res.status(200).json('success');
       })

@@ -13,32 +13,32 @@
 
   <app-resource v-for="item in resources" :key="item_id" :resource="item" class="pl-2" />
 
+  <v-dialog v-model="editDialog" width="500">
+    <app-edit-section @closed="editDialog = false" @edited="refreshSection" :section="section" />
+  </v-dialog>
+
 </v-list>
 </template>
 
 <script>
 import Resource from '@/components/course/Resource.vue';
+import EditSection from '@/components/course/EditSection.vue';
 
 export default {
   name: 'section',
   props: ['section'],
   components: {
     appResource: Resource,
+    appEditSection: EditSection,
+  },
+  data() {
+    return {
+      editDialog: false,
+    };
   },
   methods: {
-    getSection() {
-      const vm = this;
-      this.$http
-        .get(`/section/${vm.section._id}/resources`)
-        .then(response => {
-          vm.resources = response.data.resources;
-        })
-        .catch(err => {
-          this.$store.dispatch(
-            'openErrorBar',
-            'An error occurred loading the section: ' + vm.section.title,
-          );
-        });
+    refreshSection() {
+      this.$emit('edited');
     },
   },
   computed: {
@@ -53,9 +53,6 @@ export default {
       while (s.length < 2) s = '0' + s;
       return s;
     },
-  },
-  created() {
-    //this.getSection();
   },
 };
 </script>
