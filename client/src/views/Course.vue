@@ -2,13 +2,19 @@
 <v-content>
   <app-course-bar :title="course.title" />
 
-  <v-container v-if="isEmpty" fluid fill-height grid-list-lg>
+  <v-container v-if="isEmpty && !isLoadingScreen" fluid fill-height grid-list-lg>
     <v-layout align-center justify-center>
       <div>Nothing to see here yet...</div>
     </v-layout>
   </v-container>
 
-  <v-container v-show="!isEmpty" fluid grid-list-lg>
+  <v-container v-else-if="isLoadingScreen" fluid fill-height grid-list-lg>
+    <v-layout align-center justify-center>
+      <v-progress-circular :size="70" :width="7" color="indigo" indeterminate></v-progress-circular>
+    </v-layout>
+  </v-container>
+
+  <v-container v-show="!isEmpty && !isLoadingScreen" fluid grid-list-lg>
     <v-layout row wrap>
       <v-expansion-panel>
         <app-unit v-for="item in course.units" :key="item._id" :unit="item" @edited="refreshCourse" />
@@ -67,6 +73,7 @@ export default {
       addResourceDialog: false,
       unitToDelete: {},
       dateModified: Date.now(),
+      isLoadingScreen: true,
     };
   },
   methods: {
@@ -76,6 +83,7 @@ export default {
         .get(`/course/short/${vm.short}/units`)
         .then(response => {
           vm.course = response.data;
+          this.isLoadingScreen = false;
         })
         .catch(err => {
           this.$store.dispatch('openErrorBar', 'An error occurred loading the course');
