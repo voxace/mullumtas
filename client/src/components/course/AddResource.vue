@@ -29,6 +29,10 @@
             <v-text-field label="Resource Title" placeholder="Resource Title" v-model="title" required :rules="titleRules"></v-text-field>
           </v-flex>
 
+          <v-flex xs12 d-flex>
+            <v-text-field label="Resource Link" placeholder="Link" v-model="link" required :rules="linkRules"></v-text-field>
+          </v-flex>
+
         </v-layout>
       </v-container>
 
@@ -51,6 +55,7 @@
 export default {
   props: ['course'],
   data: () => ({
+    pickerDialog: false,
     selectedUnit: {},
     selectedSection: {},
     selectedType: {
@@ -130,12 +135,21 @@ export default {
   },
   computed: {
     unitItems() {
-      this.selectedUnit = this.course.units[0];
+      if (this.course.units != undefined) {
+        this.selectedUnit = this.course.units[0];
+      }
       return this.course.units;
     },
     sectionItems() {
-      this.selectedSection = this.selectedUnit.sections[0];
+      if (this.selectedUnit.sections != undefined) {
+        this.selectedSection = this.selectedUnit.sections[0];
+      }
       return this.selectedUnit.sections;
+    },
+  },
+  watch: {
+    selectedSection: function(val) {
+      this.order = this.selectedSection.resources.length + 1;
     },
   },
 };

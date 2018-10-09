@@ -8,7 +8,7 @@
     </v-layout>
   </v-container>
 
-  <v-container v-else fluid grid-list-lg>
+  <v-container v-show="!isEmpty" fluid grid-list-lg>
     <v-layout row wrap>
       <v-expansion-panel>
         <app-unit v-for="item in course.units" :key="item._id" :unit="item" @edited="refreshCourse" />
@@ -93,10 +93,12 @@ export default {
       return this.$store.getters.isEditing;
     },
     isEmpty() {
-      if (this.course.units.length == 0) {
-        return true;
-      } else {
-        return false;
+      if (this.course.units != null) {
+        if (this.course.units.length == 0) {
+          return true;
+        } else {
+          return false;
+        }
       }
     },
   },

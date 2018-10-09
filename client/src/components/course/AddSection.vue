@@ -95,7 +95,9 @@ export default {
   },
   computed: {
     items() {
-      this.selectedUnit = this.course.units[0];
+      if (this.course.units != undefined) {
+        this.selectedUnit = this.course.units[0];
+      }
       return this.course.units;
     },
   },
