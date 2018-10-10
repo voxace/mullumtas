@@ -16,8 +16,12 @@ module.exports = function (router) {
   router.post('/resource', (req, res) => {
     const resource = new Resource(req.body);
     resource.save((err, data) => {
-      if (err) return console.log(err);
-      res.status(200).json(data);
+      if (err) {
+        console.log(err.message);
+        res.status(500).send({ error: 'Something went wrong!' });
+      } else {
+        res.status(200).json(data);
+      }
     });
   });
 };

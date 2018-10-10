@@ -7,6 +7,7 @@ const resourceSchema = new Schema({
   type: { type: String, required: true },
   order: { type: Number, required: true },
   isActive: { type: Boolean, default: true },
+  link: { type: String, required: true },
 });
 
 const Resource = mongoose.model('Resource', resourceSchema);

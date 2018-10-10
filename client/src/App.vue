@@ -7,7 +7,7 @@
       Close
     </v-btn>
   </v-snackbar>
-  <fade-transition>
+  <fade-transition appear>
     <router-view />
   </fade-transition>
   <app-footer />

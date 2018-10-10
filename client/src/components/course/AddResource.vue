@@ -62,8 +62,7 @@ export default {
       title: 'Google Docs',
       type: 'doc',
     },
-    typeItems: [
-      {
+    typeItems: [{
         title: 'Google Docs',
         type: 'doc',
       },
@@ -91,6 +90,8 @@ export default {
     titleRules: [v => !!v || 'Resource Title is required'],
     unitRules: [v => !!v || 'Unit is required'],
     sectionRules: [v => !!v || 'Section is required'],
+    link: '',
+    linkRules: [v => !!v || 'Link is required'],
   }),
   methods: {
     saveResource() {
@@ -102,6 +103,7 @@ export default {
             title: vm.title,
             type: vm.selectedType.type,
             order: vm.order,
+            link: vm.link,
           })
           .then(response => {
             if (response.data._id.length > 0) {
@@ -118,13 +120,13 @@ export default {
                   }
                 })
                 .catch(err2 => {
-                  this.$store.dispatch('openErrorBar', 'Error Saving Section');
+                  this.$store.dispatch('openErrorBar', 'Error Saving Resource into Section');
                   vm.loading = false;
                 });
             }
           })
           .catch(err => {
-            this.$store.dispatch('openErrorBar', 'Error Saving Unit');
+            this.$store.dispatch('openErrorBar', 'Error Saving Resource');
             vm.loading = false;
           });
       }
