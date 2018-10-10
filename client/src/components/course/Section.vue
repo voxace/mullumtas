@@ -17,7 +17,7 @@
     </fade-transition>
   </v-subheader>
 
-  <app-resource v-for="item in resources" :key="item_id" :resource="item" class="pl-2" />
+  <app-resource v-for="item in resources" :key="item_id" :resource="item" class="pl-2" @edited="refreshSection" />
 
   <v-dialog v-model="editDialog" width="500">
     <app-edit-section @closed="editDialog = false" @edited="refreshSection" :section="section" />

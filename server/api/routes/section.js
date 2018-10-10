@@ -76,7 +76,6 @@ module.exports = function (router) {
       .populate({ path: 'resources' })
       .exec()
       .then((section) => {
-        console.log(req.params.id);
         section.resources.forEach((resource) => {
           Resource.deleteOne({ _id: resource._id }, (err) => {
             if (err) return handleError(err);
@@ -90,7 +89,7 @@ module.exports = function (router) {
         res.status(200).json('success');
       })
       .catch(err => res.status(500).json({
-        message: 'Error deleting course',
+        message: 'Error deleting section',
         error: err,
       }));
   });

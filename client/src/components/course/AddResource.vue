@@ -55,14 +55,14 @@
 export default {
   props: ['course'],
   data: () => ({
-    pickerDialog: false,
     selectedUnit: {},
     selectedSection: {},
     selectedType: {
       title: 'Google Docs',
       type: 'doc',
     },
-    typeItems: [{
+    typeItems: [
+      {
         title: 'Google Docs',
         type: 'doc',
       },

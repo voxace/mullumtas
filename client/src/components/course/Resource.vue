@@ -23,17 +23,33 @@
     </fade-transition>
   </v-list-tile-action>
 
+  <v-dialog v-model="editDialog" width="500">
+    <app-edit-resource @closed="editDialog = false" @edited="refreshResource" :resource="resource" />
+  </v-dialog>
+
 </v-list-tile>
 </template>
 
 <script>
 import FadeTransition from '@/components/FadeTransition.vue';
+import EditResource from '@/components/course/EditResource.vue';
 
 export default {
   name: 'resource',
   props: ['resource'],
+  data() {
+    return {
+      editDialog: false,
+    };
+  },
   components: {
     fadeTransition: FadeTransition,
+    appEditResource: EditResource,
+  },
+  methods: {
+    refreshResource() {
+      this.$emit('edited');
+    },
   },
   computed: {
     icon() {

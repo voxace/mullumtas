@@ -72,7 +72,6 @@ export default {
     deleteSection() {
       const vm = this;
       vm.loading = true;
-      alert(vm.section._id);
       this.$http
         .delete('/section/' + vm.section._id)
         .then(response => {
