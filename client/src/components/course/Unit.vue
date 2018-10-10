@@ -15,7 +15,7 @@
   </v-layout>
 
   <v-card>
-    <app-section v-for="item in sections" :key="item._id" :section="item" @edited="refreshUnit" />
+    <app-section v-for="item in sections" :key="item._id" :section="item" @edited="refreshUnit" :short="short" :unitID="unit._id" />
   </v-card>
 
   <v-dialog v-model="editDialog" width="500">
@@ -32,7 +32,7 @@ import FadeTransition from '@/components/FadeTransition.vue';
 
 export default {
   name: 'unit',
-  props: ['unit'],
+  props: ['unit', 'short'],
   components: {
     appSection: Section,
     appEditUnit: EditUnit,

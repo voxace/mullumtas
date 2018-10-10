@@ -1,5 +1,5 @@
 <template>
-<v-list-tile @click="">
+<v-list-tile @click.stop="nav('/course/'+short+'/unit/'+unitID+'/section/'+section._id+'/resource/'+resource._id)">
 
   <v-list-tile-avatar :size="avatarSize">
     <v-icon :size="iconSize" :class="[colors]">{{ icon }}</v-icon>
@@ -36,7 +36,7 @@ import EditResource from '@/components/course/EditResource.vue';
 
 export default {
   name: 'resource',
-  props: ['resource'],
+  props: ['resource', 'short', 'section', 'unitID'],
   data() {
     return {
       editDialog: false,
@@ -49,6 +49,9 @@ export default {
   methods: {
     refreshResource() {
       this.$emit('edited');
+    },
+    nav(to) {
+      this.$router.push(to);
     },
   },
   computed: {

@@ -17,7 +17,7 @@
     </fade-transition>
   </v-subheader>
 
-  <app-resource v-for="item in resources" :key="item_id" :resource="item" class="pl-2" @edited="refreshSection" />
+  <app-resource v-for="item in resources" :key="item_id" :resource="item" class="pl-2" @edited="refreshSection" :section="section" :short="short" :unitID="unitID" />
 
   <v-dialog v-model="editDialog" width="500">
     <app-edit-section @closed="editDialog = false" @edited="refreshSection" :section="section" />
@@ -33,7 +33,7 @@ import FadeTransition from '@/components/FadeTransition.vue';
 
 export default {
   name: 'section',
-  props: ['section'],
+  props: ['section', 'short', 'unitID'],
   components: {
     appResource: Resource,
     appEditSection: EditSection,

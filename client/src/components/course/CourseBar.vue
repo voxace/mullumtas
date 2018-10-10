@@ -13,4 +13,11 @@ export default {
 </script>
 
 <style scoped>
+a,
+a:link,
+a:active,
+a:hover {
+  text-decoration: none;
+  color: black;
+}
 </style>

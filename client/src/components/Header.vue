@@ -51,8 +51,7 @@ export default {
   },
   data() {
     return {
-      items: [
-        {
+      items: [{
           icon: 'account_circle',
           href: '#',
           title: 'Profile',

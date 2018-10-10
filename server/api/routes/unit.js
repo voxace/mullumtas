@@ -7,6 +7,14 @@ module.exports = function (router) {
   // Get course by ID
   router.get('/unit/:id', (req, res) => {
     Unit.findById(req.params.id)
+      .populate({
+        path: 'sections',
+        options: { sort: { order: 1 } },
+        populate: {
+          path: 'resources',
+          options: { sort: { order: 1 } },
+        },
+      })
       .exec()
       .then(data => res.status(200).json(data))
       .catch(err => res.status(500).json({
@@ -18,6 +26,14 @@ module.exports = function (router) {
   // Get course by title
   router.get('/unit/title/:title', (req, res) => {
     Unit.findOne({ title: req.params.title })
+      .populate({
+        path: 'sections',
+        options: { sort: { order: 1 } },
+        populate: {
+          path: 'resources',
+          options: { sort: { order: 1 } },
+        },
+      })
       .exec()
       .then(data => res.status(200).json(data))
       .catch(err => res.status(500).json({

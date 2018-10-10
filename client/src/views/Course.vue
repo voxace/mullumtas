@@ -1,6 +1,6 @@
 <template>
 <v-content>
-  <app-course-bar :title="course.title" />
+  <app-course-bar :title="course.title" unit="" />
 
   <v-container v-if="isEmpty && !isLoadingScreen" fluid fill-height grid-list-lg>
     <v-layout align-center justify-center>
@@ -17,7 +17,7 @@
   <v-container v-show="!isEmpty && !isLoadingScreen" fluid grid-list-lg>
     <v-layout row wrap>
       <v-expansion-panel>
-        <app-unit v-for="item in course.units" :key="item._id" :unit="item" @edited="refreshCourse" />
+        <app-unit v-for="item in course.units" :key="item._id" :unit="item" @edited="refreshCourse" :short="course.short" />
       </v-expansion-panel>
     </v-layout>
   </v-container>

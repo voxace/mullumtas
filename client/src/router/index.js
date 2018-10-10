@@ -16,7 +16,13 @@ export default new Router({
     {
       path: '/course/:short',
       name: 'course',
-      component: () => import(/* webpackChunkName: "about" */ '../views/Course.vue'),
+      component: () => import(/* webpackChunkName: "course" */ '../views/Course.vue'),
+      props: true,
+    },
+    {
+      path: '/course/:short/unit/:unitID/section/:sectionID/resource/:resourceID',
+      name: 'resource',
+      component: () => import(/* webpackChunkName: "resource" */ '../views/Resource.vue'),
       props: true,
     },
   ],
