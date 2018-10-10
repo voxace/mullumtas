@@ -6,26 +6,35 @@
   </v-list-tile-avatar>
 
   <v-list-tile-content>
-    <span class="body-1"><span v-if="editing">{{ order }} - </span>{{ resource.title }}</span>
+    <span class="body-1">
+      <fade-transition><span v-if="editing">{{ order }} - </span></fade-transition>{{ resource.title }}
+    </span>
   </v-list-tile-content>
 
   <v-list-tile-action>
-    <v-tooltip left v-if="editing">
-      <v-btn slot="activator" flat icon color="indigo" class="mr-4" @click.stop="editDialog = true">
-        <v-icon>edit</v-icon>
-      </v-btn>
-      <span>Edit Resource</span>
-    </v-tooltip>
-    <v-checkbox v-else></v-checkbox>
+    <fade-transition>
+      <v-tooltip left v-if="editing">
+        <v-btn slot="activator" flat icon color="indigo" class="mr-4" @click.stop="editDialog = true">
+          <v-icon>edit</v-icon>
+        </v-btn>
+        <span>Edit Resource</span>
+      </v-tooltip>
+      <v-checkbox v-else></v-checkbox>
+    </fade-transition>
   </v-list-tile-action>
 
 </v-list-tile>
 </template>
 
 <script>
+import FadeTransition from '@/components/FadeTransition.vue';
+
 export default {
   name: 'resource',
   props: ['resource'],
+  components: {
+    fadeTransition: FadeTransition,
+  },
   computed: {
     icon() {
       if (this.resource.type == 'doc') {

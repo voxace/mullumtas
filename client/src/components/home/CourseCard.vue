@@ -8,7 +8,9 @@
       <h3 class="headline my-3">{{ course.title }}</h3>
       <v-card-actions class="align-center justify-center">
         <v-btn flat color="indigo">Access Course</v-btn>
-        <v-btn to="/" exact active-class="" v-if="editing" flat color="error" @click="editCourse">Edit</v-btn>
+        <fade-transition>
+          <v-btn to="/" exact active-class="" v-if="editing" flat color="error" @click="editCourse">Edit</v-btn>
+        </fade-transition>
       </v-card-actions>
     </v-card-text>
   </v-card>
@@ -16,8 +18,13 @@
 </template>
 
 <script>
+import FadeTransition from '@/components/FadeTransition.vue';
+
 export default {
   props: ['course'],
+  components: {
+    fadeTransition: FadeTransition,
+  },
   computed: {
     editing() {
       return this.$store.getters.isEditing;

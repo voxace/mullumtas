@@ -34,15 +34,17 @@
     <app-add-resource @closed="addResourceDialog = false" @added="refreshCourse" :course="course" />
   </v-dialog>
 
-  <v-speed-dial v-if="editing" v-model="fab" bottom right fixed direction="left" transition="slide-x-reverse-transition">
-    <v-btn slot="activator" v-model="fab" color="indigo" dark fab>
-      <v-icon>add</v-icon>
-      <v-icon>close</v-icon>
-    </v-btn>
-    <v-btn dark round small color="indigo" class="ml-1 px-0" @click="addUnitDialog = true">Unit</v-btn>
-    <v-btn dark round small color="indigo" class="mx-1 px-0" @click="addSectionDialog = true">Section</v-btn>
-    <v-btn dark round small color="indigo" class="mr-1" @click="addResourceDialog = true">Resource</v-btn>
-  </v-speed-dial>
+  <bounce-transition appear="true">
+    <v-speed-dial v-if="editing" v-model="fab" bottom right fixed direction="left" transition="slide-x-reverse-transition">
+      <v-btn slot="activator" v-model="fab" color="indigo" dark fab>
+        <v-icon>add</v-icon>
+        <v-icon>close</v-icon>
+      </v-btn>
+      <v-btn dark round small color="indigo" class="ml-1 px-0" @click="addUnitDialog = true">Unit</v-btn>
+      <v-btn dark round small color="indigo" class="mx-1 px-0" @click="addSectionDialog = true">Section</v-btn>
+      <v-btn dark round small color="indigo" class="mr-1" @click="addResourceDialog = true">Resource</v-btn>
+    </v-speed-dial>
+  </bounce-transition>
 
 </v-content>
 </template>
@@ -53,6 +55,7 @@ import Unit from '@/components/course/Unit.vue';
 import AddUnit from '@/components/course/AddUnit.vue';
 import AddSection from '@/components/course/AddSection.vue';
 import AddResource from '@/components/course/AddResource.vue';
+import BounceTransition from '@/components/BounceTransition.vue';
 
 export default {
   name: 'home',
@@ -63,6 +66,7 @@ export default {
     appAddUnit: AddUnit,
     appAddSection: AddSection,
     appAddResource: AddResource,
+    BounceTransition: BounceTransition,
   },
   data() {
     return {

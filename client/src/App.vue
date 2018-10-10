@@ -7,9 +7,9 @@
       Close
     </v-btn>
   </v-snackbar>
-  <transition name="fade">
+  <fade-transition>
     <router-view />
-  </transition>
+  </fade-transition>
   <app-footer />
 </v-app>
 </template>
@@ -17,12 +17,14 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
+import FadeTransition from '@/components/FadeTransition.vue';
 
 export default {
   name: 'App',
   components: {
     appHeader: Header,
     appFooter: Footer,
+    FadeTransition: FadeTransition,
   },
   data() {
     return {
@@ -87,15 +89,5 @@ export default {
     font-size: 12px !important;
     font-weight: 700;
   }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s ease-out;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

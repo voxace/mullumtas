@@ -2,15 +2,29 @@
 <v-content>
   <app-course-bar />
 
-  <v-container fluid fill-height grid-list-lg>
+  <v-container v-if="isEmpty && !isLoadingScreen" fluid fill-height grid-list-lg>
+    <v-layout align-center justify-center>
+      <div>Nothing to see here yet...</div>
+    </v-layout>
+  </v-container>
+
+  <v-container v-else-if="isLoadingScreen" fluid fill-height grid-list-lg>
+    <v-layout align-center justify-center>
+      <v-progress-circular :size="70" :width="7" color="indigo" indeterminate></v-progress-circular>
+    </v-layout>
+  </v-container>
+
+  <v-container v-show="!isEmpty && !isLoadingScreen" fluid fill-height grid-list-lg>
     <v-layout row wrap>
       <app-course-card v-for="item in courses" :key="item.id" :course="item" @edit="editCourse" @edit2="editDialog = true" />
     </v-layout>
   </v-container>
 
-  <v-btn fab dark bottom right fixed color="indigo" v-if="editing" @click.stop="addDialog = true">
-    <v-icon>add</v-icon>
-  </v-btn>
+  <bounce-transition appear="true">
+    <v-btn fab dark bottom right fixed color="indigo" v-if="editing" @click.stop="addDialog = true">
+      <v-icon>add</v-icon>
+    </v-btn>
+  </bounce-transition>
 
   <v-dialog v-model="addDialog" width="500">
     <app-add-course @closed="addDialog = false" @added="getCourses" />
@@ -28,6 +42,7 @@ import CourseBar from '@/components/home/CourseBar.vue';
 import CourseCard from '@/components/home/CourseCard.vue';
 import AddCourse from '@/components/home/AddCourse.vue';
 import EditCourse from '@/components/home/EditCourse.vue';
+import BounceTransition from '@/components/BounceTransition.vue';
 
 export default {
   name: 'home',
@@ -37,6 +52,7 @@ export default {
       addDialog: false,
       editDialog: false,
       courseToEdit: {},
+      isLoadingScreen: true,
     };
   },
   components: {
@@ -44,6 +60,7 @@ export default {
     appCourseCard: CourseCard,
     appAddCourse: AddCourse,
     appEditCourse: EditCourse,
+    BounceTransition: BounceTransition,
   },
   methods: {
     getCourses() {
@@ -52,6 +69,7 @@ export default {
         .get('/courses')
         .then(response => {
           vm.courses = response.data;
+          this.isLoadingScreen = false;
         })
         .catch(err => {
           this.$store.dispatch('openErrorBar', 'An error occurred loading the courses');
@@ -67,6 +85,13 @@ export default {
   computed: {
     editing() {
       return this.$store.getters.isEditing;
+    },
+    isEmpty() {
+      if (this.courses.length == 0) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
   created() {
