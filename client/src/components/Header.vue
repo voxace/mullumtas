@@ -4,7 +4,8 @@
     <v-toolbar-title>MullumTAS</v-toolbar-title>
   </router-link>
   <v-spacer></v-spacer>
-  <v-toolbar-items>
+
+  <v-toolbar-items v-if="isLoggedIn">
 
     <v-switch v-if="admin" color="yellow darken-1" v-model="editing" @click.native="toggle" class="my-3 mr-1"></v-switch>
     <p class="subheading edit-label" v-bind:class="{dim: !editing}">Editing</p>
@@ -38,6 +39,13 @@
     </v-menu>
 
   </v-toolbar-items>
+
+  <v-toolbar-items v-else>
+    <a>
+      <p class="subheading edit-label login" @click="login">Login</p>
+    </a>
+  </v-toolbar-items>
+
 </v-toolbar>
 </template>
 
@@ -51,7 +59,8 @@ export default {
   },
   data() {
     return {
-      items: [{
+      items: [
+        {
           icon: 'account_circle',
           href: '#',
           title: 'Profile',
@@ -82,6 +91,7 @@ export default {
     toggle() {
       this.$store.dispatch('toggleEditing');
     },
+    login() {},
   },
   computed: {
     editing: {
@@ -95,6 +105,9 @@ export default {
     admin() {
       return this.$store.getters.isAdmin;
     },
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
+    },
   },
 };
 </script>
@@ -105,6 +118,10 @@ a:visited,
 a:hover {
   color: white;
   text-decoration: none;
+}
+
+.login:hover {
+  font-weight: 700;
 }
 
 .edit-label {

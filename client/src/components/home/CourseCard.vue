@@ -9,7 +9,7 @@
       <v-card-actions class="align-center justify-center">
         <v-btn flat color="indigo">Access Course</v-btn>
         <fade-transition>
-          <v-btn to="/" exact active-class="" v-if="editing" flat color="error" @click="editCourse">Edit</v-btn>
+          <v-btn to="/" exact active-class="" v-if="editing && isLoggedIn" flat color="error" @click="editCourse">Edit</v-btn>
         </fade-transition>
       </v-card-actions>
     </v-card-text>
@@ -28,6 +28,9 @@ export default {
   computed: {
     editing() {
       return this.$store.getters.isEditing;
+    },
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
     },
   },
   methods: {

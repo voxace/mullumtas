@@ -9,7 +9,7 @@
             <v-list-tile-title>{{ section.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-for="resource in section.resources" :key="resource.title" @click="">
+        <v-list-tile v-for="resource in section.resources" :key="resource.title" @click.stop="nav('/course/'+short+'/unit/'+unit._id+'/section/'+section._id+'/resource/'+resource._id)">
           <v-list-tile-avatar :size="avatarSize">
             <v-icon :size="iconSize" :class="[types[resource.type].color]">{{ types[resource.type].icon }}</v-icon>
           </v-list-tile-avatar>
@@ -93,6 +93,9 @@ export default {
           this.$store.dispatch('openErrorBar', 'An error occurred loading the resource types');
         });
     },
+    nav(to) {
+      this.$router.push(to);
+    },
   },
   computed: {
     avatarSize() {
@@ -130,6 +133,7 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch('setDrawer', false);
     this.getTypes();
     this.getUnit();
     this.getResource();

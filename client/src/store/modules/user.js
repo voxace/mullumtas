@@ -1,6 +1,8 @@
 import Vue from 'vue';
 
-const state = {};
+const state = {
+  loggedIn: false,
+};
 
 const getters = {};
 

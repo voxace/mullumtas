@@ -13,13 +13,12 @@
 
   <v-list-tile-action>
     <fade-transition>
-      <v-tooltip left v-if="editing">
+      <v-tooltip left v-if="editing && isLoggedIn">
         <v-btn slot="activator" flat icon color="indigo" class="mr-4" @click.stop="editDialog = true">
           <v-icon>edit</v-icon>
         </v-btn>
         <span>Edit Resource</span>
       </v-tooltip>
-      <v-checkbox v-else></v-checkbox>
     </fade-transition>
   </v-list-tile-action>
 
@@ -111,6 +110,9 @@ export default {
       let s = this.resource.order + '';
       while (s.length < 2) s = '0' + s;
       return s;
+    },
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
     },
   },
 };

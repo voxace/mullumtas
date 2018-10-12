@@ -4,13 +4,13 @@
   <v-layout slot="header" align-center justify-space-between>
     <h3 class="title mt-2 mb-0 pa-2">{{ order }} - {{ unit.title }}</h3>
     <fade-transition>
-      <v-tooltip left v-if="editing">
+      <v-tooltip left v-if="editing && isLoggedIn">
         <v-btn slot="activator" flat icon color="indigo" class="mt-2 mb-0 pa-0 mr-4" @click.stop="editDialog = true">
           <v-icon>edit</v-icon>
         </v-btn>
         <span>Edit Unit</span>
       </v-tooltip>
-      <h4 v-else class="subheading mt-2 mr-4">7/7</h4>
+      <h4 v-else v-show="false" class="subheading mt-2 mr-4">7/7</h4>
     </fade-transition>
   </v-layout>
 
@@ -62,6 +62,9 @@ export default {
     },
     sections() {
       return this.unit.sections;
+    },
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
     },
   },
 };

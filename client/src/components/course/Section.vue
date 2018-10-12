@@ -8,7 +8,7 @@
       <fade-transition><span v-if="editing">{{ order }} - </span></fade-transition>{{ section.title }}
     </h2>
     <fade-transition>
-      <v-tooltip right v-if="editing">
+      <v-tooltip right v-if="editing && isLoggedIn">
         <v-btn slot="activator" flat icon color="indigo" class="" @click.stop="editDialog = true">
           <v-icon>edit</v-icon>
         </v-btn>
@@ -60,6 +60,9 @@ export default {
       let s = this.section.order + '';
       while (s.length < 2) s = '0' + s;
       return s;
+    },
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
     },
   },
 };

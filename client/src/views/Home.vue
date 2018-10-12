@@ -21,7 +21,7 @@
   </v-container>
 
   <bounce-transition appear="true">
-    <v-btn fab dark bottom right fixed color="indigo" v-if="editing" @click.stop="addDialog = true">
+    <v-btn fab dark bottom right fixed color="indigo" v-if="editing && isLoggedIn" @click.stop="addDialog = true">
       <v-icon>add</v-icon>
     </v-btn>
   </bounce-transition>
@@ -92,6 +92,9 @@ export default {
       } else {
         return false;
       }
+    },
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
     },
   },
   created() {
