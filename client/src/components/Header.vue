@@ -10,29 +10,28 @@
     <v-switch v-if="admin" color="yellow darken-1" v-model="editing" @click.native="toggle" class="my-3 mr-1"></v-switch>
     <p class="subheading edit-label" v-bind:class="{dim: !editing}">Editing</p>
 
-    <v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
-      <v-btn icon flat slot="activator">
-        <v-badge color="red" overlap>
-          <span slot="badge">3</span>
-          <v-icon medium>notifications</v-icon>
-        </v-badge>
-      </v-btn>
-      <notification-list></notification-list>
-    </v-menu>
-
     <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
       <v-btn icon large flat slot="activator">
         <v-avatar size="30px">
-          <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="Michael Wang" />
+          <v-icon>account_circle</v-icon>
         </v-avatar>
       </v-btn>
       <v-list class="pa-0">
-        <v-list-tile v-for="(item,index) in items" :to="!item.href ? { name: item.name } : null" :href="item.href" @click="item.click" ripple="ripple" :disabled="item.disabled" :target="item.target" rel="noopener" :key="index">
-          <v-list-tile-action v-if="item.icon">
-            <v-icon>{{ item.icon }}</v-icon>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>person</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            <v-list-tile-title>{{username}}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-divider></v-divider>
+        <v-list-tile ripple @click="logout">
+          <v-list-tile-action>
+            <v-icon>fullscreen_exit</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Logout</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -41,57 +40,34 @@
   </v-toolbar-items>
 
   <v-toolbar-items v-else>
-    <a>
-      <p class="subheading edit-label login" @click="login">Login</p>
-    </a>
+    <login />
   </v-toolbar-items>
+
+
 
 </v-toolbar>
 </template>
 
 <script>
-import NotificationList from '@/components/widgets/NotificationList';
+import NotificationList from '@/components/widgets/NotificationList.vue';
+import Login from '@/components/widgets/Login.vue';
 
 export default {
   name: 'app-toolbar',
   components: {
     NotificationList,
+    Login,
   },
   data() {
-    return {
-      items: [
-        {
-          icon: 'account_circle',
-          href: '#',
-          title: 'Profile',
-          click: e => {
-            console.log(e);
-          },
-        },
-        {
-          icon: 'settings',
-          href: '#',
-          title: 'Settings',
-          click: e => {
-            console.log(e);
-          },
-        },
-        {
-          icon: 'fullscreen_exit',
-          href: '#',
-          title: 'Logout',
-          click: e => {
-            window.getApp.$emit('APP_LOGOUT');
-          },
-        },
-      ],
-    };
+    return {};
   },
   methods: {
     toggle() {
       this.$store.dispatch('toggleEditing');
     },
-    login() {},
+    logout() {
+      this.$store.dispatch('logout');
+    },
   },
   computed: {
     editing: {
@@ -108,6 +84,12 @@ export default {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
     },
+    username() {
+      return this.$store.getters.username;
+    },
+  },
+  mounted() {
+    this.$store.dispatch('closeLoginDialog');
   },
 };
 </script>
@@ -118,10 +100,6 @@ a:visited,
 a:hover {
   color: white;
   text-decoration: none;
-}
-
-.login:hover {
-  font-weight: 700;
 }
 
 .edit-label {

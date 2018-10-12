@@ -1,8 +1,11 @@
 .DS_Store
 node_modules
 dist
+dist/*
 
 #config
+config
+config/*
 config/index.js
 
 # local env files

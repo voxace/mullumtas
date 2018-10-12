@@ -2,25 +2,34 @@ import Vue from 'vue';
 
 const state = {
   editing: true,
-  admin: true,
   snackbar: false,
   snackbarColor: 'success',
   snackbarMessage: 'Message',
   drawer: false,
+  loginDialog: false,
 };
 
 const getters = {
   isEditing: state => state.editing,
-  isAdmin: state => state.admin,
   isDrawerOpen: state => state.drawer,
   snackbar: state => state.snackbar,
   snackbarColor: state => state.snackbarColor,
   snackbarMessage: state => state.snackbarMessage,
+  loginDialog: state => state.loginDialog,
 };
 
 const actions = {
   toggleEditing(context) {
     context.commit('toggleEditing');
+  },
+  stopEditing(context) {
+    context.commit('stopEditing');
+  },
+  openLoginDialog(context) {
+    context.commit('openLoginDialog');
+  },
+  closeLoginDialog(context) {
+    context.commit('closeLoginDialog');
   },
   toggleDrawer(context) {
     context.commit('toggleDrawer');
@@ -43,8 +52,17 @@ const mutations = {
   toggleEditing(state) {
     state.editing = !state.editing;
   },
+  stopEditing(state) {
+    state.editing = false;
+  },
   toggleDrawer(state) {
     state.drawer = !state.drawer;
+  },
+  openLoginDialog(state) {
+    state.loginDialog = true;
+  },
+  closeLoginDialog(state) {
+    state.loginDialog = false;
   },
   setDrawer(state, value) {
     state.drawer = value;

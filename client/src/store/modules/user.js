@@ -2,13 +2,41 @@ import Vue from 'vue';
 
 const state = {
   loggedIn: false,
+  username: '',
+  id: '',
+  admin: true,
 };
 
-const getters = {};
+const getters = {
+  loggedIn: state => state.loggedIn,
+  isAdmin: state => state.admin,
+  username: state => state.username,
+  userID: state => state.id,
+};
 
-const actions = {};
+const actions = {
+  login(context, user) {
+    context.commit('login', user);
+  },
+  logout(context) {
+    context.commit('logout');
+  },
+};
 
-const mutations = {};
+const mutations = {
+  login(state, user) {
+    state.loggedIn = true;
+    state.username = user.detId;
+    state.id = user._id;
+    if (user.admin) state.admin = user.admin;
+  },
+  logout(state) {
+    state.loggedIn = false;
+    state.user = '';
+    state.id = '';
+    state.admin = false;
+  },
+};
 
 export default {
   state,

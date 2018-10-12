@@ -1,6 +1,39 @@
+const FormData = require('form-data');
 const User = require('../../models/user');
 
 module.exports = function (router) {
+  router.post('/login', (req, res) => {
+    const username = req.body.username.toLowerCase();
+    const password = req.body.password;
+
+    console.log(req.body);
+
+    const form = new FormData();
+    form.append('username', username);
+    form.append('password', password);
+
+    form.submit(
+      'https://web2.mullumbimb-h.schools.nsw.edu.au/portal/login/login',
+      (err, response) => {
+        if (err) {
+          res.status(500).json({ message: 'Invalid username or password' });
+        } else if (response.headers.location == '/portal/dashboard') {
+          User.findOne({ detId: username })
+            .exec()
+            .then((user) => {
+              console.log(`${user.detId} logged in`);
+              res.status(200).json(user);
+            })
+            .catch((err) => {
+              res.status(500).json({ message: 'Error finding user' });
+            });
+        } else {
+          res.status(500).json({ message: 'Invalid username or password' });
+        }
+      },
+    );
+  });
+
   // Get user by ID
   router.get('/user/:id', (req, res) => {
     User.findById(req.params.id)
