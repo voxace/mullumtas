@@ -1,14 +1,14 @@
 <template>
 <v-toolbar color="yellow darken-1" class="mb-2" fixed app style="z-index: 100;" extended>
   <v-layout align-center justify-center row fill-height slot="extension">
-    <h3 class="headline text-cs-center">{{ title }}</h3>
+    <h3 v-if="!loading" class="headline text-cs-center"><span class="hidden-sm-and-down">Year {{ grade }} - </span>{{ title }}</h3>
   </v-layout>
 </v-toolbar>
 </template>
 
 <script>
 export default {
-  props: ['title'],
+  props: ['title', 'grade', 'loading'],
 };
 </script>
 

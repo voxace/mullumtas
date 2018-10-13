@@ -3,7 +3,7 @@
 
   <v-navigation-drawer clipped="false" v-model="drawer" fixed style="padding-top: 130px" temporary>
     <v-list>
-      <v-list-group v-for="section in unit.sections" v-model="section.active" :key="section.title" :prepend-icon="section.action">
+      <v-list-group v-for="section in unit.sections" v-model="section.title" :key="section.title" :prepend-icon="section.action">
         <v-list-tile slot="activator">
           <v-list-tile-content>
             <v-list-tile-title>{{ section.title }}</v-list-tile-title>
@@ -31,12 +31,8 @@
     </v-layout>
   </v-container>
 
-  <v-container v-else fluid fill-height grid-list-lg :class="{ padding: drawer }">
-    <v-layout align-center justify-center>
-      <v-flex xs12 sm12 md10 lg8 xl6 style="max-width: 752px;">
-        <object width='100%' height='100%' v-html="docRender"></object>
-      </v-flex>
-    </v-layout>
+  <v-container v-else-if="!isLoadingScreen" fluid fill-height grid-list-lg class="ma-0 pa-0">
+    <embed style="width:100%; height:100%" :src="currentResource.link"></embed>
   </v-container>
 
 </v-content>
@@ -53,8 +49,8 @@ export default {
   },
   data: function() {
     return {
+      currentResource: {},
       types: null,
-      docRender: '',
       drawer: false,
       isLoadingScreen: true,
       dialog: false,
@@ -77,10 +73,15 @@ export default {
     },
     getResource() {
       const vm = this;
-      this.$http.get('/resource/' + vm.resourceID + '/link').then(response => {
-        this.docRender = response.data;
-        this.isLoadingScreen = false;
-      });
+      this.$http
+        .get('/resource/' + vm.resourceID)
+        .then(response1 => {
+          vm.currentResource = response1.data;
+          this.isLoadingScreen = false;
+        })
+        .catch(err => {
+          this.$store.dispatch('openErrorBar', 'An error occurred loading the resource');
+        });
     },
     getTypes() {
       const vm = this;
@@ -146,11 +147,4 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  transition: 0.1s ease-in-out;
-}
-
-.padding {
-  transform: translateX(0);
-}
 </style>

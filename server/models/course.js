@@ -7,6 +7,7 @@ const courseSchema = new Schema({
   short: { type: String, required: true },
   grade: { type: Number, required: true },
   isActive: { type: Boolean, default: true },
+  protected: { type: Boolean, default: false },
   units: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Unit' }],
   students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });

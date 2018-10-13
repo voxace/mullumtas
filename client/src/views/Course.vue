@@ -1,6 +1,6 @@
 <template>
 <v-content>
-  <app-course-bar :title="course.title" unit="" />
+  <app-course-bar :title="course.title" :grade="course.grade" :loading="isLoadingScreen" />
 
   <v-container v-if="isEmpty && !isLoadingScreen" fluid fill-height grid-list-lg>
     <v-layout align-center justify-center>
