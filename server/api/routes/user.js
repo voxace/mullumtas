@@ -45,9 +45,9 @@ module.exports = function (router) {
       }));
   });
 
-  // Get user by email
-  router.get('/user/email/:email', (req, res) => {
-    User.find({ email: req.params.email })
+  // Get user by course
+  router.get('/user/course/:detId', (req, res) => {
+    User.find({ courses: req.params.detId })
       .exec()
       .then(docs => res.status(200).json(docs))
       .catch(err => res.status(500).json({
@@ -65,15 +65,38 @@ module.exports = function (router) {
     });
   });
 
+  // Create new user add to course
+  router.post('/user/course', (req, res) => {
+    User.findOne({ detId: req.body.detId })
+      .exec()
+      .then((user) => {
+        if (user) {
+          if (user.courses.indexOf(req.body.courses[0]) === -1) {
+            user.courses.push(req.body.courses[0]);
+          }
+        } else {
+          user = new User(req.body);
+        }
+        user.save((err, user) => {
+          if (err) return console.log(err);
+          console.log(user);
+          res.status(200).json(user);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+          message: 'Error finding user',
+          error: err,
+        });
+      });
+  });
+
   // Update user by ID
   router.put('/user/:id', (req, res) => {
     console.log(req.body);
     const qry = { _id: req.params.id };
     const doc = {
-      // first: req.body.firstName,
-      // last: req.body.lastName,
-      // email: req.body.email,
-      // password: req.body.password,
       isActive: req.body.isActive,
     };
     console.log(doc);
@@ -81,5 +104,40 @@ module.exports = function (router) {
       if (err) return console.log(err);
       res.status(200).json(response);
     });
+  });
+
+  // Remove user from course
+  router.delete('/user/:detId/course/:courseId', (req, res) => {
+    User.findOne({ detId: req.params.detId })
+      .exec()
+      .then((user) => {
+        console.log(user);
+        const index = user.courses.indexOf(req.params.courseId);
+        if (index > -1) {
+          user.courses.splice(index, 1);
+        }
+        if (user.courses.length > 0) {
+          const qry = { _id: req.params.id };
+          const doc = {
+            isActive: req.body.isActive,
+          };
+          console.log(doc);
+          user.save((err, user) => {
+            if (err) return console.log(err);
+            console.log(`removed course from${user}`);
+            res.status(200).json(user);
+          });
+        } else {
+          user.delete((err, user) => {
+            if (err) return console.log(err);
+            console.log(`deleted${user}`);
+            res.status(200).json(user);
+          });
+        }
+      })
+      .catch(err => res.status(500).json({
+        message: 'Error deleting resource',
+        error: err,
+      }));
   });
 };

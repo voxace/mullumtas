@@ -6,12 +6,14 @@ const state = {
   snackbarColor: 'success',
   snackbarMessage: 'Message',
   drawer: false,
+  studentsDrawer: false,
   loginDialog: false,
 };
 
 const getters = {
   isEditing: state => state.editing,
   isDrawerOpen: state => state.drawer,
+  isStudentsDrawerOpen: state => state.studentsDrawer,
   snackbar: state => state.snackbar,
   snackbarColor: state => state.snackbarColor,
   snackbarMessage: state => state.snackbarMessage,
@@ -37,6 +39,12 @@ const actions = {
   setDrawer(context, value) {
     context.commit('setDrawer', value);
   },
+  toggleStudentsDrawer(context) {
+    context.commit('toggleStudentsDrawer');
+  },
+  setStudentsDrawer(context, value) {
+    context.commit('setStudentsDrawer', value);
+  },
   openSuccessBar(context, message) {
     context.commit('openSuccessBar', message);
   },
@@ -55,9 +63,6 @@ const mutations = {
   stopEditing(state) {
     state.editing = false;
   },
-  toggleDrawer(state) {
-    state.drawer = !state.drawer;
-  },
   openLoginDialog(state) {
     state.loginDialog = true;
   },
@@ -66,6 +71,15 @@ const mutations = {
   },
   setDrawer(state, value) {
     state.drawer = value;
+  },
+  toggleDrawer(state) {
+    state.drawer = !state.drawer;
+  },
+  setStudentsDrawer(state, value) {
+    state.studentsDrawer = value;
+  },
+  toggleStudentsDrawer(state) {
+    state.studentsDrawer = !state.studentsDrawer;
   },
   openSuccessBar(state, message) {
     state.snackbar = true;

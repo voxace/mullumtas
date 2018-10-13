@@ -46,6 +46,26 @@
     </v-speed-dial>
   </bounce-transition>
 
+  <v-navigation-drawer clipped="false" v-model="studentsDrawer" fixed style="padding-top: 130px" temporary>
+    <v-text-field label="Add Student" v-model="newStudent" placeholder="Username" class="px-2 mt-3 mb-0" @keyup.enter="addStudent">
+      <v-fade-transition slot="append">
+        <v-progress-circular v-if="addStudentLoading" size="24" color="info" indeterminate></v-progress-circular>
+      </v-fade-transition>
+    </v-text-field>
+    <v-list-tile v-for="student in students" @click.stop="" class="student">
+      <v-list-tile-content>
+        <v-list-tile-title>
+          {{ student.detId }}
+        </v-list-tile-title>
+      </v-list-tile-content>
+      <v-list-tile-action>
+        <v-btn icon flat color="error" @click.stop="deleteStudent(student.detId)">
+          <v-icon>delete</v-icon>
+        </v-btn>
+      </v-list-tile-action>
+    </v-list-tile>
+  </v-navigation-drawer>
+
 </v-content>
 </template>
 
@@ -71,6 +91,7 @@ export default {
   data() {
     return {
       fab: false,
+      studentsDrawer: false,
       course: {},
       addUnitDialog: false,
       addSectionDialog: false,
@@ -78,6 +99,9 @@ export default {
       unitToDelete: {},
       dateModified: Date.now(),
       isLoadingScreen: true,
+      students: [],
+      newStudent: '',
+      addStudentLoading: false,
     };
   },
   methods: {
@@ -95,6 +119,52 @@ export default {
     },
     deleteUnit(unit) {
       this.unitToDelete = unit;
+    },
+    addStudent() {
+      if (this.newStudent != '') {
+        this.addStudentLoading = true;
+        const vm = this;
+        let user = {
+          detId: vm.newStudent,
+          admin: false,
+          courses: [vm.course._id],
+        };
+        this.$http
+          .post('/user/course', user)
+          .then(response => {
+            this.getStudents();
+            vm.newStudent = '';
+            this.addStudentLoading = false;
+          })
+          .catch(err => {
+            this.$store.dispatch('openErrorBar', 'An error occurred adding the student');
+            this.addStudentLoading = false;
+          });
+      }
+    },
+    getStudents() {
+      const vm = this;
+      this.$http
+        .get(`/user/course/${vm.course._id}`)
+        .then(response => {
+          vm.students = response.data;
+        })
+        .catch(err => {
+          this.$store.dispatch('openErrorBar', 'An error occurred loading the students');
+        });
+    },
+    deleteStudent(student) {
+      const vm = this;
+      vm.loading = true;
+      this.$http
+        .delete('/user/' + student + '/course/' + vm.course._id)
+        .then(response => {
+          this.getStudents();
+          this.$store.dispatch('openSuccessBar', 'Delete Successful');
+        })
+        .catch(err => {
+          this.$store.dispatch('openErrorBar', 'Error Deleting Unit');
+        });
     },
     refreshCourse() {
       setTimeout(this.getCourse(), 500);
@@ -116,9 +186,27 @@ export default {
     isLoggedIn() {
       return this.$store.getters.loggedIn;
     },
+    globalStudentsDrawer: {
+      get: function() {
+        return this.$store.getters.isStudentsDrawerOpen;
+      },
+    },
+  },
+  watch: {
+    studentsDrawer: function(val) {
+      this.$store.dispatch('setStudentsDrawer', val);
+      if (val == true) {
+        this.getStudents();
+      }
+    },
+    globalStudentsDrawer: function(val) {
+      this.studentsDrawer = val;
+    },
   },
   created() {
     this.getCourse();
+    this.studentsDrawer = false;
+    this.$store.dispatch('setStudentsDrawer', false);
   },
 };
 </script>
@@ -131,5 +219,9 @@ export default {
 .v-expansion-panel__container {
   margin-bottom: 15px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.student:hover {
+  background: #eee;
 }
 </style>
