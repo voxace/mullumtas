@@ -31,8 +31,14 @@
     </v-layout>
   </v-container>
 
-  <v-container v-else-if="!isLoadingScreen" fluid fill-height grid-list-lg class="ma-0 pa-0">
-    <embed style="width:100%; height:100%" :src="currentResource.link"></embed>
+  <v-container v-else-if="!isLoadingScreen && currentResource.type != 'url'" fluid fill-height grid-list-lg class="ma-0 pa-0">
+    <iframe style="width:100%; height:100%" height="100%" :src="currentResource.link"></iframe>
+  </v-container>
+
+  <v-container v-else-if="!isLoadingScreen && currentResource.type == 'url'" fluid fill-height grid-list-lg class="ma-0 pa-0">
+    <v-layout align-center justify-center>
+      <div><a :href="currentResource.link" target="_blank">{{ currentResource.title }}</a></div>
+    </v-layout>
   </v-container>
 
 </v-content>
@@ -75,8 +81,11 @@ export default {
       const vm = this;
       this.$http
         .get('/resource/' + vm.resourceID)
-        .then(response1 => {
-          vm.currentResource = response1.data;
+        .then(response => {
+          vm.currentResource = response.data;
+          if (vm.currentResource.type == 'url') {
+            window.open(vm.currentResource.link, '_blank');
+          }
           this.isLoadingScreen = false;
         })
         .catch(err => {
