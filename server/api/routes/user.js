@@ -48,6 +48,7 @@ module.exports = function (router) {
   // Get user by course
   router.get('/user/course/:detId', (req, res) => {
     User.find({ courses: req.params.detId })
+      .sort('detId')
       .exec()
       .then(docs => res.status(200).json(docs))
       .catch(err => res.status(500).json({

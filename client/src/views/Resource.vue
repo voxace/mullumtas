@@ -31,13 +31,19 @@
     </v-layout>
   </v-container>
 
-  <v-container v-else-if="!isLoadingScreen && currentResource.type != 'url'" fluid fill-height grid-list-lg class="ma-0 pa-0">
+  <v-container v-else-if="!isLoadingScreen && currentResource.type != 'url' && allowedAccess" fluid fill-height grid-list-lg class="ma-0 pa-0">
     <iframe style="width:100%; height:100%" height="100%" :src="currentResource.link"></iframe>
   </v-container>
 
-  <v-container v-else-if="!isLoadingScreen && currentResource.type == 'url'" fluid fill-height grid-list-lg class="ma-0 pa-0">
+  <v-container v-else-if="!isLoadingScreen && currentResource.type == 'url' && allowedAccess" fluid fill-height grid-list-lg class="ma-0 pa-0">
     <v-layout align-center justify-center>
       <div><a :href="currentResource.link" target="_blank">{{ currentResource.title }}</a></div>
+    </v-layout>
+  </v-container>
+
+  <v-container v-else-if="!allowedAccess" fluid fill-height grid-list-lg>
+    <v-layout align-center justify-center>
+      <div>To access this course you must be enrolled and logged in.</div>
     </v-layout>
   </v-container>
 
@@ -132,6 +138,29 @@ export default {
       get: function() {
         return this.$store.getters.isDrawerOpen;
       },
+    },
+    isAdmin() {
+      return this.$store.getters.isAdmin;
+    },
+    isLoggedIn() {
+      return this.$store.getters.loggedIn;
+    },
+    allowedAccess() {
+      if (this.course.protected && !this.isAdmin) {
+        if (this.isLoggedIn) {
+          let member = false;
+          this.students.forEach(student => {
+            if (student.detId == this.$store.getters.username) {
+              member = true;
+            }
+          });
+          return member;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
     },
   },
   watch: {
