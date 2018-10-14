@@ -12,7 +12,7 @@
         <v-layout wrap align-center>
 
           <v-flex xs12 sm6 d-flex>
-            <v-select :items="typeItems" item-text="title" item-value="type" label="Type" return-object v-model="resource.type"></v-select>
+            <v-select :items="typeItems" item-text="title" item-value="type" label="Type" v-model="resource.type"></v-select>
           </v-flex>
           <v-flex xs12 sm6 d-flex>
             <v-text-field label="Resource Number" placeholder="Resource Number" v-model="resource.order" required :rules="orderRules"></v-text-field>
@@ -51,8 +51,7 @@
 export default {
   props: ['resource'],
   data: () => ({
-    typeItems: [
-      {
+    typeItems: [{
         title: 'Google Docs',
         type: 'doc',
       },

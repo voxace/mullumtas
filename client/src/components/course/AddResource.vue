@@ -61,7 +61,8 @@ export default {
       title: 'Google Docs',
       type: 'doc',
     },
-    typeItems: [{
+    typeItems: [
+      {
         title: 'Google Docs',
         type: 'doc',
       },
@@ -144,15 +145,22 @@ export default {
     },
   },
   watch: {
+    selectedUnit: function(val) {
+      this.selectedSection = this.selectedUnit.sections[0];
+    },
     selectedSection: function(val) {
-      this.order = this.selectedSection.resources.length + 1;
+      if (this.selectedSection != undefined) {
+        this.order = this.selectedSection.resources.length + 1;
+      }
     },
   },
   mounted() {
     setTimeout(() => {
       this.selectedUnit = this.course.units[0];
       this.selectedSection = this.selectedUnit.sections[0];
-      this.order = this.selectedSection.resources.length + 1;
+      if (this.selectedSection != undefined) {
+        this.order = this.selectedSection.resources.length + 1;
+      }
     }, 1500);
   },
 };
