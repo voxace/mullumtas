@@ -113,10 +113,10 @@ export default {
                     this.$store.dispatch('openSuccessBar', 'Save Successful');
                     this.$emit('closed');
                     this.$emit('added');
-                    vm.title = '';
-                    vm.order = '';
-                    vm.link = '';
                     vm.loading = false;
+                    vm.title = '';
+                    vm.order += 1;
+                    vm.link = '';
                   }
                 })
                 .catch(err2 => {
@@ -137,15 +137,9 @@ export default {
   },
   computed: {
     unitItems() {
-      if (this.course.units != undefined) {
-        this.selectedUnit = this.course.units[0];
-      }
       return this.course.units;
     },
     sectionItems() {
-      if (this.selectedUnit.sections != undefined) {
-        this.selectedSection = this.selectedUnit.sections[0];
-      }
       return this.selectedUnit.sections;
     },
   },
@@ -153,6 +147,13 @@ export default {
     selectedSection: function(val) {
       this.order = this.selectedSection.resources.length + 1;
     },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.selectedUnit = this.course.units[0];
+      this.selectedSection = this.selectedUnit.sections[0];
+      this.order = this.selectedSection.resources.length + 1;
+    }, 1500);
   },
 };
 </script>

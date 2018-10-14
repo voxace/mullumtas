@@ -43,7 +43,6 @@ export default {
     order: '',
     orderRules: [
       v => !!v || 'Unit Number is required',
-      v => (v && v.length <= 2) || 'Unit Number must be less than 100',
       v => (!isNaN(v) && v >= 1 && v < 100) || 'Unit Number must be between 1 and 99',
     ],
     title: '',
@@ -68,9 +67,9 @@ export default {
                     this.$store.dispatch('openSuccessBar', 'Save Successful');
                     this.$emit('added');
                     this.$emit('closed');
-                    vm.title = '';
-                    vm.order = '';
                     vm.loading = false;
+                    vm.title = '';
+                    vm.order += 1;
                   }
                 })
                 .catch(err2 => {
@@ -87,6 +86,11 @@ export default {
     },
     closeDialog(event) {
       this.$emit('closed');
+    },
+  },
+  watch: {
+    course: function(val) {
+      this.order = this.course.units.length + 1;
     },
   },
 };

@@ -72,9 +72,9 @@ export default {
                     this.$store.dispatch('openSuccessBar', 'Save Successful');
                     this.$emit('closed');
                     this.$emit('added');
-                    vm.title = '';
-                    vm.order = '';
                     vm.loading = false;
+                    vm.title = '';
+                    vm.order += 1;
                   }
                 })
                 .catch(err2 => {
@@ -95,11 +95,19 @@ export default {
   },
   computed: {
     items() {
-      if (this.course.units != undefined) {
-        this.selectedUnit = this.course.units[0];
-      }
       return this.course.units;
     },
+  },
+  watch: {
+    selectedUnit: function(val) {
+      this.order = this.selectedUnit.sections.length + 1;
+    },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.selectedUnit = this.course.units[0];
+      this.order = this.selectedUnit.length + 1;
+    }, 1500);
   },
 };
 </script>
