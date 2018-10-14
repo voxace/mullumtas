@@ -3,7 +3,7 @@
 
   <v-navigation-drawer clipped="false" v-model="drawer" fixed style="padding-top: 130px" temporary>
     <v-list>
-      <v-list-group v-for="section in unit.sections" v-model="section.title" :key="section.title" :prepend-icon="section.action">
+      <v-list-group v-for="section in unit.sections" :value="(section._id == sectionID)" :key="section.title" :prepend-icon="section.action">
         <v-list-tile slot="activator">
           <v-list-tile-content>
             <v-list-tile-title>{{ section.title }}</v-list-tile-title>

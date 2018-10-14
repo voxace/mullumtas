@@ -61,8 +61,7 @@ export default {
       title: 'Google Docs',
       type: 'doc',
     },
-    typeItems: [
-      {
+    typeItems: [{
         title: 'Google Docs',
         type: 'doc',
       },
@@ -116,6 +115,7 @@ export default {
                     this.$emit('added');
                     vm.title = '';
                     vm.order = '';
+                    vm.link = '';
                     vm.loading = false;
                   }
                 })
