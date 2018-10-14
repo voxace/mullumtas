@@ -61,6 +61,7 @@ export default {
   },
   data: function() {
     return {
+      course: {},
       currentResource: {},
       types: null,
       drawer: false,
@@ -72,6 +73,17 @@ export default {
     };
   },
   methods: {
+    getCourse() {
+      const vm = this;
+      this.$http
+        .get('/course/short/' + vm.short)
+        .then(response => {
+          vm.course = response.data;
+        })
+        .catch(err => {
+          this.$store.dispatch('openErrorBar', 'An error occurred loading the course');
+        });
+    },
     getUnit() {
       const vm = this;
       this.$http
@@ -177,6 +189,7 @@ export default {
   },
   created() {
     this.$store.dispatch('setDrawer', false);
+    this.getCourse();
     this.getTypes();
     this.getUnit();
     this.getResource();
