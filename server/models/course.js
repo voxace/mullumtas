@@ -9,7 +9,6 @@ const courseSchema = new Schema({
   isActive: { type: Boolean, default: true },
   protected: { type: Boolean, default: false },
   units: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Unit' }],
-  students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
 const Course = mongoose.model('Course', courseSchema);

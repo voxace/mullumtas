@@ -10,11 +10,17 @@
 
       <v-container fluid grid-list-xl class="my-1 py-1">
         <v-layout wrap align-center>
-          <v-flex xs12 sm6 d-flex>
+          <v-flex xs4 sm5 d-flex>
             <v-text-field label="Grade" v-model="course.grade" required :rules="gradeRules"></v-text-field>
           </v-flex>
-          <v-flex xs12 sm6 d-flex>
+          <v-flex xs5 sm5 d-flex>
             <v-text-field label="Short Name" v-model="course.short" required :rules="shortRules"></v-text-field>
+          </v-flex>
+          <v-flex xs3 sm2>
+            <v-btn :loading="protectedLoading" icon @click.stop="toggleCourseStatus">
+              <v-icon v-if="course.protected">lock</v-icon>
+              <v-icon v-else>lock_open</v-icon>
+            </v-btn>
           </v-flex>
           <v-flex xs12 d-flex>
             <v-text-field label="Title" v-model="course.title" required :rules="titleRules"></v-text-field>
@@ -46,6 +52,7 @@ export default {
   data: () => ({
     valid: true,
     loading: false,
+    protectedLoading: false,
     grade: '',
     gradeRules: [
       v => !!v || 'Grade is required',
@@ -92,6 +99,25 @@ export default {
         .catch(err => {
           this.$store.dispatch('openErrorBar', 'Error Deleting Unit');
           vm.loading = false;
+        });
+    },
+    toggleCourseStatus() {
+      this.course.protected = !this.course.protected;
+      const vm = this;
+      vm.protectedLoading = true;
+      this.$http
+        .patch('/course/' + vm.course._id + '/protected/' + vm.course.protected)
+        .then(response => {
+          if (vm.course.protected == true) {
+            this.$store.dispatch('openSuccessBar', 'Course Restricted');
+          } else {
+            this.$store.dispatch('openSuccessBar', 'Course Open');
+          }
+          vm.protectedLoading = false;
+        })
+        .catch(err => {
+          this.$store.dispatch('openErrorBar', 'Error Updating Course');
+          vm.protectedLoading = false;
         });
     },
     closeDialog(event) {

@@ -5,6 +5,7 @@ const state = {
   username: '',
   id: '',
   admin: true,
+  courses: [],
 };
 
 const getters = {
@@ -12,6 +13,7 @@ const getters = {
   isAdmin: state => state.admin,
   username: state => state.username,
   userID: state => state.id,
+  userCourses: state => state.courses,
 };
 
 const actions = {

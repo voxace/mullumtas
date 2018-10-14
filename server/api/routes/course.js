@@ -115,6 +115,22 @@ module.exports = function (router) {
     );
   });
 
+  // Toggle protected status
+  router.patch('/course/:courseID/protected/:isProtected', (req, res) => {
+    Course.update(
+      { _id: req.params.courseID },
+      { protected: req.params.isProtected },
+      (err, response) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send({ error: 'Something went wrong!' });
+        } else {
+          res.status(200).json(response);
+        }
+      },
+    );
+  });
+
   // Delete course
   router.delete('/course/:id', (req, res) => {
     Course.findById(req.params.id)

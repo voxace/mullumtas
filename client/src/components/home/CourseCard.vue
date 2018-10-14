@@ -8,6 +8,10 @@
       <h3 class="headline my-3">{{ course.title }}</h3>
       <v-card-actions class="align-center justify-center">
         <v-btn flat color="indigo">Access Course</v-btn>
+        <v-tooltip v-if="course.protected">
+          <v-icon slot="activator">lock</v-icon>
+          Restricted to enrolled students only
+        </v-tooltip>
         <fade-transition>
           <v-btn to="/" exact active-class="" v-if="editing && isLoggedIn" flat color="error" @click="editCourse">Edit</v-btn>
         </fade-transition>

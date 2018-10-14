@@ -2,7 +2,7 @@
 <v-content>
   <app-course-bar :title="course.title" :grade="course.grade" :loading="isLoadingScreen" />
 
-  <v-container v-if="isEmpty && !isLoadingScreen" fluid fill-height grid-list-lg>
+  <v-container v-if="isEmpty && !isLoadingScreen && allowedAccess" fluid fill-height grid-list-lg>
     <v-layout align-center justify-center>
       <div>Nothing to see here yet...</div>
     </v-layout>
@@ -14,11 +14,17 @@
     </v-layout>
   </v-container>
 
-  <v-container v-show="!isEmpty && !isLoadingScreen" fluid grid-list-lg>
+  <v-container v-else-if="!isEmpty && !isLoadingScreen && allowedAccess" fluid grid-list-lg>
     <v-layout row wrap>
       <v-expansion-panel>
         <app-unit v-for="item in course.units" :key="item._id" :unit="item" @edited="refreshCourse" :short="course.short" />
       </v-expansion-panel>
+    </v-layout>
+  </v-container>
+
+  <v-container v-else-if="!allowedAccess" fluid fill-height grid-list-lg>
+    <v-layout align-center justify-center>
+      <div>To access this course you must be enrolled and logged in.</div>
     </v-layout>
   </v-container>
 
@@ -111,6 +117,7 @@ export default {
         .get(`/course/short/${vm.short}/units`)
         .then(response => {
           vm.course = response.data;
+          this.getStudents();
           this.isLoadingScreen = false;
         })
         .catch(err => {
@@ -183,6 +190,9 @@ export default {
         }
       }
     },
+    isAdmin() {
+      return this.$store.getters.isAdmin;
+    },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
     },
@@ -190,6 +200,23 @@ export default {
       get: function() {
         return this.$store.getters.isStudentsDrawerOpen;
       },
+    },
+    allowedAccess() {
+      if (this.course.protected && !this.isAdmin) {
+        if (this.isLoggedIn) {
+          let member = false;
+          this.students.forEach(student => {
+            if (student.detId == this.$store.getters.username) {
+              member = true;
+            }
+          });
+          return member;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
     },
   },
   watch: {

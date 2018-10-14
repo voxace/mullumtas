@@ -8,7 +8,7 @@
   <v-toolbar-items v-if="isLoggedIn">
 
     <v-switch v-if="admin" color="yellow darken-1" v-model="editing" @click.native="toggle" class="my-3 mr-1"></v-switch>
-    <p class="subheading edit-label" v-bind:class="{dim: !editing}">Editing</p>
+    <p v-if="admin" class="subheading edit-label" v-bind:class="{dim: !editing}">Editing</p>
 
     <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
       <v-btn icon large flat slot="activator">
