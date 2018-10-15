@@ -31,8 +31,10 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.send({ status: 404 });
+  res.sendStatus(404);
 });
+
+app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 
 mongoose.connect(config.db.path);
 const db = mongoose.connection;
