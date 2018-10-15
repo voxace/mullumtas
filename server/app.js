@@ -30,6 +30,10 @@ app.use((req, res, next) => {
   res.json(err);
 });
 
+app.get('/', (req, res) => {
+  res.send({ status: 404 });
+});
+
 mongoose.connect(config.db.path);
 const db = mongoose.connection;
 
