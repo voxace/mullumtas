@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const corsOptions = {
   origin: config.cors.origin,
   optionsSuccessStatus: 200,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 };
 app.use(cors(corsOptions));
 app.options('*', cors());
