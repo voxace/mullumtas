@@ -22,6 +22,8 @@ module.exports = function (router) {
             .exec()
             .then((user) => {
               console.log(`${user.detId} logged in`);
+              res.header('Access-Control-Allow-Origin', '*');
+              res.header('Access-Control-Allow-Headers', 'X-Requested-With');
               res.status(200).json(user);
             })
             .catch((err) => {

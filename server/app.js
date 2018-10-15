@@ -17,7 +17,7 @@ const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  // allowedHeaders: 'Content-Type,Authorization',
+  allowedHeaders: 'Content-Type,Authorization,X-Auth-Token',
 };
 app.use(cors(corsOptions));
 // app.options('*', cors());
