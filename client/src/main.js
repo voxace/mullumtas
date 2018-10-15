@@ -12,6 +12,7 @@ Vue.config.productionTip = false;
 
 axios.defaults.baseURL = config.baseURL;
 axios.defaults.timeout = 5000;
+axios.defaults.withCredentials = false;
 Vue.use(VueAxios, axios);
 
 new Vue({

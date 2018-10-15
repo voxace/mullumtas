@@ -14,13 +14,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const corsOptions = {
-  origin: true,
+  origin: '*',
   optionsSuccessStatus: 200,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  allowedHeaders: 'Content-Type,Authorization',
+  // allowedHeaders: 'Content-Type,Authorization',
 };
 app.use(cors(corsOptions));
-app.options('*', cors());
+// app.options('*', cors());
 
 app.use('/api', api);
 app.use(express.static('static'));
@@ -36,10 +36,16 @@ app.get('/', (req, res) => {
   res.sendStatus(404);
 });
 
-app.get('/favicon.ico', (req, res) => res.sendStatus(204));
+app.get('/favicon.ico', (req, res) => {
+  res.sendStatus(204);
+});
 
-mongoose.connect(config.db.path);
+mongoose.connect(
+  config.db.path,
+  { useNewUrlParser: true },
+);
 const db = mongoose.connection;
+mongoose.set('useCreateIndex', true);
 
 db.on('error', console.error.bind(console, 'connection error:'));
 
