@@ -2,7 +2,7 @@
 <v-list-tile @click.stop="nav('/course/'+short+'/unit/'+unitID+'/section/'+section._id+'/resource/'+resource._id)">
 
   <v-list-tile-avatar :size="avatarSize">
-    <v-icon :size="iconSize" :class="[colors]">{{ icon }}</v-icon>
+    <v-icon :size="iconSize" :class="[types[resource.type].color]">{{ types[resource.type].icon }}</v-icon>
   </v-list-tile-avatar>
 
   <v-list-tile-content>
@@ -23,19 +23,19 @@
   </v-list-tile-action>
 
   <v-dialog v-model="editDialog" width="500">
-    <app-edit-resource @closed="editDialog = false" @edited="refreshResource" :resource="resource" />
+    <app-edit-resource @closed="editDialog = false" @edited="refreshResource" :resource="resource" :typeItems="typeItems" />
   </v-dialog>
 
 </v-list-tile>
 </template>
 
 <script>
-import FadeTransition from '@/components/FadeTransition.vue';
+import FadeTransition from '@/components/transitions/FadeTransition.vue';
 import EditResource from '@/components/course/EditResource.vue';
 
 export default {
   name: 'resource',
-  props: ['resource', 'short', 'section', 'unitID'],
+  props: ['resource', 'short', 'section', 'unitID', 'types', 'typeItems'],
   data() {
     return {
       editDialog: false,
@@ -54,32 +54,6 @@ export default {
     },
   },
   computed: {
-    icon() {
-      if (this.resource.type == 'doc') {
-        return 'mdi-file-document-box';
-      } else if (this.resource.type == 'slide') {
-        return 'mdi-file-presentation-box';
-      } else if (this.resource.type == 'quiz') {
-        return 'mdi-file-question';
-      } else if (this.resource.type == 'url') {
-        return 'mdi-link';
-      } else {
-        return 'mdi-file-document-box';
-      }
-    },
-    colors() {
-      if (this.resource.type == 'doc') {
-        return ['blue', 'white--text'];
-      } else if (this.resource.type == 'slide') {
-        return ['orange', 'lighten-1', 'white--text'];
-      } else if (this.resource.type == 'quiz') {
-        return ['blue', 'darken-2', 'white--text'];
-      } else if (this.resource.type == 'url') {
-        return ['green', 'white--text'];
-      } else {
-        return ['red', 'white--text'];
-      }
-    },
     avatarSize() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
@@ -107,6 +81,7 @@ export default {
       return this.$store.getters.isAdmin;
     },
     order() {
+      // Pads the order number out to two digits
       let s = this.resource.order + '';
       while (s.length < 2) s = '0' + s;
       return s;
@@ -117,6 +92,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

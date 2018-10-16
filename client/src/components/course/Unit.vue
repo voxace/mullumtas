@@ -15,7 +15,7 @@
   </v-layout>
 
   <v-card>
-    <app-section v-for="item in sections" :key="item._id" :section="item" @edited="refreshUnit" :short="short" :unitID="unit._id" />
+    <app-section v-for="item in sections" :key="item._id" :section="item" @edited="refreshUnit" :short="short" :unitID="unit._id" :types="types" :typeItems="typeItems" />
   </v-card>
 
   <v-dialog v-model="editDialog" width="500">
@@ -28,11 +28,11 @@
 <script>
 import Section from '@/components/course/Section.vue';
 import EditUnit from '@/components/course/EditUnit.vue';
-import FadeTransition from '@/components/FadeTransition.vue';
+import FadeTransition from '@/components/transitions/FadeTransition.vue';
 
 export default {
   name: 'unit',
-  props: ['unit', 'short'],
+  props: ['unit', 'short', 'types', 'typeItems'],
   components: {
     appSection: Section,
     appEditUnit: EditUnit,

@@ -1,10 +1,7 @@
-const Course = require('../../models/course');
-const Unit = require('../../models/unit');
 const Section = require('../../models/section');
-const Resource = require('../../models/resource');
 
 module.exports = function (router) {
-  // Get course by ID
+  // Get section by ID
   router.get('/section/:id', (req, res) => {
     Section.findById(req.params.id)
       .exec()
@@ -68,29 +65,5 @@ module.exports = function (router) {
         }
       },
     );
-  });
-
-  // Delete section
-  router.delete('/section/:id', (req, res) => {
-    Section.findById(req.params.id)
-      .populate({ path: 'resources' })
-      .exec()
-      .then((section) => {
-        section.resources.forEach((resource) => {
-          Resource.deleteOne({ _id: resource._id }, (err) => {
-            if (err) return handleError(err);
-            console.log(`Deleted Resource: ${resource.title}`);
-          });
-        });
-        Section.deleteOne({ _id: section._id }, (err) => {
-          if (err) return handleError(err);
-          console.log(`Deleted Section: ${section.title}`);
-        });
-        res.status(200).json('success');
-      })
-      .catch(err => res.status(500).json({
-        message: 'Error deleting section',
-        error: err,
-      }));
   });
 };

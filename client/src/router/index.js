@@ -25,5 +25,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "resource" */ '../views/Resource.vue'),
       props: true,
     },
+    {
+      path: '*',
+      redirect: { name: 'home' },
+    },
   ],
 });

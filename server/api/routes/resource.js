@@ -1,4 +1,3 @@
-const request = require('request');
 const Resource = require('../../models/resource');
 
 module.exports = function (router) {
@@ -11,32 +10,6 @@ module.exports = function (router) {
         message: 'Error finding resource',
         error: err,
       }));
-  });
-
-  // Get all types
-  router.get('/types', (req, res) => {
-    res.status(200).json({
-      doc: {
-        title: 'Google Docs',
-        icon: 'mdi-file-document-box',
-        color: ['blue', 'white--text'],
-      },
-      slide: {
-        title: 'Google Slides',
-        icon: 'mdi-file-presentation-box',
-        color: ['orange', 'lighten-1', 'white--text'],
-      },
-      quiz: {
-        title: 'Google Forms',
-        icon: 'mdi-file-question',
-        color: ['blue', 'darken-2', 'white--text'],
-      },
-      url: {
-        title: 'Link',
-        icon: 'mdi-link',
-        color: ['green', 'white--text'],
-      },
-    });
   });
 
   // Create new resource
@@ -64,22 +37,5 @@ module.exports = function (router) {
         res.status(200).json(response);
       }
     });
-  });
-
-  // Delete resource
-  router.delete('/resource/:id', (req, res) => {
-    Resource.findById(req.params.id)
-      .exec()
-      .then((resource) => {
-        Resource.deleteOne({ _id: resource._id }, (err) => {
-          if (err) return handleError(err);
-          console.log(`Deleted Resource: ${resource.title}`);
-        });
-        res.status(200).json('success');
-      })
-      .catch(err => res.status(500).json({
-        message: 'Error deleting resource',
-        error: err,
-      }));
   });
 };

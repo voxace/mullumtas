@@ -17,7 +17,7 @@
   <v-container v-else-if="!isEmpty && !isLoadingScreen && allowedAccess" fluid grid-list-lg>
     <v-layout row wrap>
       <v-expansion-panel>
-        <app-unit v-for="item in course.units" :key="item._id" :unit="item" @edited="refreshCourse" :short="course.short" />
+        <app-unit v-for="item in course.units" :key="item._id" :unit="item" @edited="refreshCourse" :short="course.short" :types="types" :typeItems="typeItems" />
       </v-expansion-panel>
     </v-layout>
   </v-container>
@@ -37,7 +37,7 @@
   </v-dialog>
 
   <v-dialog v-model="addResourceDialog" width="500">
-    <app-add-resource @closed="addResourceDialog = false" @added="refreshCourse" :course="course" />
+    <app-add-resource @closed="addResourceDialog = false" @added="refreshCourse" :course="course" :typeItems="typeItems" />
   </v-dialog>
 
   <bounce-transition appear="true">
@@ -81,7 +81,7 @@ import Unit from '@/components/course/Unit.vue';
 import AddUnit from '@/components/course/AddUnit.vue';
 import AddSection from '@/components/course/AddSection.vue';
 import AddResource from '@/components/course/AddResource.vue';
-import BounceTransition from '@/components/BounceTransition.vue';
+import BounceTransition from '@/components/transitions/BounceTransition.vue';
 
 export default {
   name: 'home',
@@ -108,6 +108,7 @@ export default {
       students: [],
       newStudent: '',
       addStudentLoading: false,
+      types: {},
     };
   },
   methods: {
@@ -122,6 +123,9 @@ export default {
         })
         .catch(err => {
           this.$store.dispatch('openErrorBar', 'An error occurred loading the course');
+          this.$router.replace({
+            name: 'home',
+          });
         });
     },
     deleteUnit(unit) {
@@ -171,6 +175,28 @@ export default {
         })
         .catch(err => {
           this.$store.dispatch('openErrorBar', 'Error Deleting Unit');
+        });
+    },
+    getTypes() {
+      const vm = this;
+      this.$http
+        .get('/types')
+        .then(response => {
+          vm.types = response.data;
+        })
+        .catch(err => {
+          this.$store.dispatch('openErrorBar', 'An error occurred loading the resource types');
+        });
+    },
+    getTypeItems() {
+      const vm = this;
+      this.$http
+        .get('/types/list')
+        .then(response => {
+          vm.typeItems = response.data;
+        })
+        .catch(err => {
+          this.$store.dispatch('openErrorBar', 'An error occurred loading the resource type items');
         });
     },
     refreshCourse() {
@@ -231,7 +257,9 @@ export default {
     },
   },
   created() {
+    this.getTypes();
     this.getCourse();
+    this.getTypeItems();
     this.studentsDrawer = false;
     this.$store.dispatch('setStudentsDrawer', false);
   },

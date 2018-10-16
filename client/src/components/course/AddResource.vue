@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  props: ['course'],
+  props: ['course', 'typeItems'],
   data: () => ({
     selectedUnit: {},
     selectedSection: {},
@@ -61,24 +61,6 @@ export default {
       title: 'Google Docs',
       type: 'doc',
     },
-    typeItems: [
-      {
-        title: 'Google Docs',
-        type: 'doc',
-      },
-      {
-        title: 'Google Slides',
-        type: 'slide',
-      },
-      {
-        title: 'Google Forms',
-        type: 'quiz',
-      },
-      {
-        title: 'Link',
-        type: 'url',
-      },
-    ],
     valid: true,
     loading: false,
     order: '',

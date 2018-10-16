@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import FadeTransition from '@/components/FadeTransition.vue';
+import FadeTransition from '@/components/transitions/FadeTransition.vue';
 
 export default {
   props: ['course'],

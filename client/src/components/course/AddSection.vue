@@ -105,8 +105,10 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      this.selectedUnit = this.course.units[0];
-      this.order = this.selectedUnit.length + 1;
+      if (this.course.units[0]) {
+        this.selectedUnit = this.course.units[0];
+        this.order = this.selectedUnit.length + 1;
+      }
     }, 1500);
   },
 };

@@ -1,7 +1,6 @@
 const express = require('express');
 
 const app = express();
-const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -20,11 +19,9 @@ const corsOptions = {
   allowedHeaders: 'Content-Type,Authorization,X-Auth-Token',
 };
 app.use(cors(corsOptions));
-// app.options('*', cors());
 
 app.use('/api', api);
 app.use(express.static('static'));
-app.use(morgan('dev'));
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

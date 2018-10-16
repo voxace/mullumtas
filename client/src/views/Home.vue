@@ -42,7 +42,7 @@ import CourseBar from '@/components/home/CourseBar.vue';
 import CourseCard from '@/components/home/CourseCard.vue';
 import AddCourse from '@/components/home/AddCourse.vue';
 import EditCourse from '@/components/home/EditCourse.vue';
-import BounceTransition from '@/components/BounceTransition.vue';
+import BounceTransition from '@/components/transitions/BounceTransition.vue';
 
 export default {
   name: 'home',

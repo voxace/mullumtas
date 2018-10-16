@@ -49,13 +49,11 @@
 </template>
 
 <script>
-import NotificationList from '@/components/widgets/NotificationList.vue';
 import Login from '@/components/widgets/Login.vue';
 
 export default {
   name: 'app-toolbar',
   components: {
-    NotificationList,
     Login,
   },
   data() {

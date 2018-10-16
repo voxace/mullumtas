@@ -17,7 +17,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import FadeTransition from '@/components/FadeTransition.vue';
+import FadeTransition from '@/components/transitions/FadeTransition.vue';
 
 export default {
   name: 'App',

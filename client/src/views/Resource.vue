@@ -93,6 +93,9 @@ export default {
         })
         .catch(err => {
           this.$store.dispatch('openErrorBar', 'An error occurred loading the unit');
+          this.$router.replace({
+            name: 'home',
+          });
         });
     },
     getResource() {
@@ -108,6 +111,9 @@ export default {
         })
         .catch(err => {
           this.$store.dispatch('openErrorBar', 'An error occurred loading the resource');
+          this.$router.replace({
+            name: 'home',
+          });
         });
     },
     getTypes() {

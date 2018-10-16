@@ -1,10 +1,7 @@
-const Course = require('../../models/course');
 const Unit = require('../../models/unit');
-const Section = require('../../models/section');
-const Resource = require('../../models/resource');
 
 module.exports = function (router) {
-  // Get course by ID
+  // Get unit by ID
   router.get('/unit/:id', (req, res) => {
     Unit.findById(req.params.id)
       .populate({
@@ -23,7 +20,7 @@ module.exports = function (router) {
       }));
   });
 
-  // Get course by title
+  // Get unit by title
   router.get('/unit/title/:title', (req, res) => {
     Unit.findOne({ title: req.params.title })
       .populate({
@@ -54,7 +51,7 @@ module.exports = function (router) {
       }));
   });
 
-  // Create new course
+  // Create new unit
   router.post('/unit', (req, res) => {
     const unit = new Unit(req.body);
     unit.save((err, data) => {
@@ -91,40 +88,5 @@ module.exports = function (router) {
         }
       },
     );
-  });
-
-  // Delete unit
-  router.delete('/unit/:id', (req, res) => {
-    Unit.findById(req.params.id)
-      .populate({
-        path: 'sections',
-        populate: {
-          path: 'resources',
-        },
-      })
-      .exec()
-      .then((unit) => {
-        unit.sections.forEach((section) => {
-          section.resources.forEach((resource) => {
-            Resource.deleteOne({ _id: resource._id }, (err) => {
-              if (err) return handleError(err);
-              console.log(`Deleted Resource: ${resource.title}`);
-            });
-          });
-          Section.deleteOne({ _id: section._id }, (err) => {
-            if (err) return handleError(err);
-            console.log(`Deleted Section: ${section.title}`);
-          });
-        });
-        Unit.deleteOne({ _id: unit._id }, (err) => {
-          if (err) return handleError(err);
-          console.log(`Deleted Unit: ${unit.title}`);
-        });
-        res.status(200).json('success');
-      })
-      .catch(err => res.status(500).json({
-        message: 'Error deleting unit',
-        error: err,
-      }));
   });
 };

@@ -49,25 +49,8 @@
 
 <script>
 export default {
-  props: ['resource'],
+  props: ['resource', 'typeItems'],
   data: () => ({
-    typeItems: [{
-        title: 'Google Docs',
-        type: 'doc',
-      },
-      {
-        title: 'Google Slides',
-        type: 'slide',
-      },
-      {
-        title: 'Google Forms',
-        type: 'quiz',
-      },
-      {
-        title: 'Link',
-        type: 'url',
-      },
-    ],
     valid: true,
     loading: false,
     orderRules: [
