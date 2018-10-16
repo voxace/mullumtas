@@ -1,5 +1,5 @@
 <template>
-<v-footer light height="45" color="yellow darken-1" app fixed>
+<v-footer light height="45" color="yellow darken-1" app fixed v-if="!isFullScreen">
   <v-layout row align-center>
     <v-flex xs12 align-content-center justify-center>
       <p class="body-1 my-0 text-xs-center">
@@ -11,7 +11,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    isFullScreen() {
+      return this.$store.getters.isFullScreen;
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -98,6 +98,7 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch('setFullScreen', false);
     this.getCourses();
   },
 };

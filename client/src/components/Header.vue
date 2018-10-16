@@ -1,5 +1,5 @@
 <template>
-<v-toolbar color="indigo" dark app style="z-index: 200;">
+<v-toolbar color="indigo" dark app style="z-index: 200;" v-if="!isFullScreen">
   <router-link to="/" exact>
     <v-toolbar-title>MullumTAS</v-toolbar-title>
   </router-link>
@@ -28,7 +28,7 @@
         <v-divider></v-divider>
         <v-list-tile ripple @click="logout">
           <v-list-tile-action>
-            <v-icon>fullscreen_exit</v-icon>
+            <v-icon>mdi-logout</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Logout</v-list-tile-title>
@@ -81,6 +81,9 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    isFullScreen() {
+      return this.$store.getters.isFullScreen;
     },
     username() {
       return this.$store.getters.username;

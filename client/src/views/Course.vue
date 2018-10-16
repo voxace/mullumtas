@@ -257,11 +257,12 @@ export default {
     },
   },
   created() {
+    this.studentsDrawer = false;
+    this.$store.dispatch('setStudentsDrawer', false);
+    this.$store.dispatch('setFullScreen', false);
     this.getTypes();
     this.getCourse();
     this.getTypeItems();
-    this.studentsDrawer = false;
-    this.$store.dispatch('setStudentsDrawer', false);
   },
 };
 </script>

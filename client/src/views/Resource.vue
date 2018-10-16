@@ -1,7 +1,7 @@
 <template>
 <v-content>
 
-  <v-navigation-drawer clipped="false" v-model="drawer" fixed style="padding-top: 130px" temporary>
+  <v-navigation-drawer clipped="false" v-model="drawer" fixed :style="padding" temporary>
     <v-list>
       <v-list-group v-for="section in unit.sections" :value="(section._id == sectionID)" :key="section.title" :prepend-icon="section.action">
         <v-list-tile slot="activator">
@@ -152,6 +152,13 @@ export default {
           break;
       }
     },
+    padding() {
+      if (this.isFullScreen) {
+        return 'padding-top: 38px';
+      } else {
+        return 'padding-top: 130px';
+      }
+    },
     globalDrawer: {
       get: function() {
         return this.$store.getters.isDrawerOpen;
@@ -162,6 +169,9 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    isFullScreen() {
+      return this.$store.getters.isFullScreen;
     },
     allowedAccess() {
       if (this.course.protected && !this.isAdmin) {

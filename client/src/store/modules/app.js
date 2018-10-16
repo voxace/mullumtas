@@ -8,10 +8,12 @@ const state = {
   drawer: false,
   studentsDrawer: false,
   loginDialog: false,
+  fullscreen: false,
 };
 
 const getters = {
   isEditing: state => state.editing,
+  isFullScreen: state => state.fullscreen,
   isDrawerOpen: state => state.drawer,
   isStudentsDrawerOpen: state => state.studentsDrawer,
   snackbar: state => state.snackbar,
@@ -23,6 +25,12 @@ const getters = {
 const actions = {
   toggleEditing(context) {
     context.commit('toggleEditing');
+  },
+  toggleFullScreen(context) {
+    context.commit('toggleFullScreen');
+  },
+  setFullScreen(context, value) {
+    context.commit('setFullScreen', value);
   },
   stopEditing(context) {
     context.commit('stopEditing');
@@ -59,6 +67,12 @@ const actions = {
 const mutations = {
   toggleEditing(state) {
     state.editing = !state.editing;
+  },
+  toggleFullScreen(state) {
+    state.fullscreen = !state.fullscreen;
+  },
+  setFullScreen(state, value) {
+    state.fullscreen = value;
   },
   stopEditing(state) {
     state.editing = false;
