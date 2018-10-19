@@ -1,6 +1,6 @@
 <template>
 <v-toolbar color="yellow darken-1" class="mb-2" fixed app style="z-index: 100;" extended>
-  <v-toolbar-side-icon v-if="editing && isLoggedIn" slot="extension" @click="toggleStudentsDrawer">
+  <v-toolbar-side-icon v-if="editing && isLoggedIn && isAdmin" slot="extension" @click="toggleStudentsDrawer">
     <v-icon>group_add</v-icon>
   </v-toolbar-side-icon>
   <v-layout align-center justify-center row fill-height slot="extension">
@@ -18,6 +18,9 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    isAdmin() {
+      return this.$store.getters.isAdmin;
     },
   },
   methods: {

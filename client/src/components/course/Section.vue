@@ -1,5 +1,5 @@
 <template>
-<v-list class="mb-0 pb-0" subheader>
+<v-list class="mb-0 pb-0" subheader v-if="editing || resources.length > 0">
 
   <v-divider></v-divider>
 

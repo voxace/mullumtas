@@ -41,7 +41,7 @@
   </v-dialog>
 
   <bounce-transition appear="true">
-    <v-speed-dial v-if="editing && isLoggedIn" v-model="fab" bottom right fixed direction="left" transition="slide-x-reverse-transition">
+    <v-speed-dial v-if="editing && isLoggedIn && isAdmin" v-model="fab" bottom right fixed direction="left" transition="slide-x-reverse-transition">
       <v-btn slot="activator" v-model="fab" color="indigo" dark fab>
         <v-icon>add</v-icon>
         <v-icon>close</v-icon>

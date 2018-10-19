@@ -1,5 +1,5 @@
 <template>
-<v-expansion-panel-content>
+<v-expansion-panel-content v-if="editing || sections.length > 0">
 
   <v-layout slot="header" align-center justify-space-between>
     <h3 class="title mt-2 mb-0 pa-2">{{ order }} - {{ unit.title }}</h3>
@@ -10,7 +10,6 @@
         </v-btn>
         <span>Edit Unit</span>
       </v-tooltip>
-      <h4 v-else v-show="false" class="subheading mt-2 mr-4">7/7</h4>
     </fade-transition>
   </v-layout>
 
