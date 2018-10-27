@@ -2,36 +2,93 @@
 <v-content>
   <app-course-bar />
 
-  <v-container v-if="isEmpty && !isLoadingScreen" fluid fill-height grid-list-lg>
-    <v-layout align-center justify-center>
+  <v-container
+    v-if="isEmpty && !isLoadingScreen"
+    fluid
+    fill-height
+    grid-list-lg
+  >
+    <v-layout
+      align-center
+      justify-center
+    >
       <div>Nothing to see here yet...</div>
     </v-layout>
   </v-container>
 
-  <v-container v-else-if="isLoadingScreen" fluid fill-height grid-list-lg>
-    <v-layout align-center justify-center>
-      <v-progress-circular :size="70" :width="7" color="indigo" indeterminate></v-progress-circular>
+  <v-container
+    v-else-if="isLoadingScreen"
+    fluid
+    fill-height
+    grid-list-lg
+  >
+    <v-layout
+      align-center
+      justify-center
+    >
+      <v-progress-circular
+        :size="70"
+        :width="7"
+        color="indigo"
+        indeterminate
+      ></v-progress-circular>
     </v-layout>
   </v-container>
 
-  <v-container v-show="!isEmpty && !isLoadingScreen" fluid fill-height grid-list-lg>
-    <v-layout row wrap>
-      <app-course-card v-for="item in courses" :key="item.id" :course="item" @edit="editCourse" @edit2="editDialog = true" />
+  <v-container
+    v-show="!isEmpty && !isLoadingScreen"
+    fluid
+    fill-height
+    grid-list-lg
+  >
+    <v-layout
+      row
+      wrap
+    >
+      <app-course-card
+        v-for="item in coursesArray"
+        :key="item.id"
+        :course="item"
+        @edit="editCourse"
+        @edit2="editDialog = true"
+      />
     </v-layout>
   </v-container>
 
   <bounce-transition appear="true">
-    <v-btn fab dark bottom right fixed color="indigo" v-if="editing && isLoggedIn && isAdmin" @click.stop="addDialog = true">
+    <v-btn
+      fab
+      dark
+      bottom
+      right
+      fixed
+      color="indigo"
+      v-if="editing && isLoggedIn && isAdmin"
+      @click.stop="addDialog = true"
+    >
       <v-icon>add</v-icon>
     </v-btn>
   </bounce-transition>
 
-  <v-dialog v-model="addDialog" width="500">
-    <app-add-course @closed="addDialog = false" @added="getCourses" />
+  <v-dialog
+    v-model="addDialog"
+    width="500"
+  >
+    <app-add-course
+      @closed="addDialog = false"
+      @added="getCourses"
+    />
   </v-dialog>
 
-  <v-dialog v-model="editDialog" width="500">
-    <app-edit-course @closed="editDialog = false" @edited="refreshCourses" :course="courseToEdit" />
+  <v-dialog
+    v-model="editDialog"
+    width="500"
+  >
+    <app-edit-course
+      @closed="editDialog = false"
+      @edited="refreshCourses"
+      :course="courseToEdit"
+    />
   </v-dialog>
 
 </v-content>
@@ -66,32 +123,26 @@ export default {
     getCourses() {
       const vm = this;
       this.$http
-        .get('/courses')
-        .then(response => {
+        .get( '/courses' )
+        .then( response => {
           vm.courses = response.data;
           this.isLoadingScreen = false;
-        })
-        .catch(err => {
-          this.$store.dispatch('openErrorBar', 'An error occurred loading the courses');
-        });
+        } )
+        .catch( err => {
+          this.$store.dispatch( 'openErrorBar',
+            'An error occurred loading the courses' );
+        } );
     },
-    editCourse(course) {
+    editCourse( course ) {
       this.courseToEdit = course;
     },
     refreshCourses() {
-      setTimeout(this.getCourses(), 500);
+      setTimeout( this.getCourses(), 500 );
     },
   },
   computed: {
     editing() {
       return this.$store.getters.isEditing;
-    },
-    isEmpty() {
-      if (this.courses.length == 0) {
-        return true;
-      } else {
-        return false;
-      }
     },
     isLoggedIn() {
       return this.$store.getters.loggedIn;
@@ -99,9 +150,33 @@ export default {
     isAdmin() {
       return this.$store.getters.isAdmin;
     },
+    isMyCourses() {
+      return this.$store.getters.isMyCourses;
+    },
+    userCourses() {
+      return this.$store.getters.userCourses;
+    },
+    coursesArray() {
+      if ( this.isLoggedIn && this.isMyCourses ) {
+        let userCourses = this.userCourses;
+        return this.courses.filter( function( course ) {
+          return userCourses.includes( course._id );
+        } );
+      } else {
+        return this.courses;
+      }
+    },
+    isEmpty() {
+      if ( this.coursesArray.length == 0 ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   created() {
-    this.$store.dispatch('setFullScreen', false);
+    this.$store.dispatch( 'setFullScreen', false );
+    this.$store.dispatch( 'setMyCoursesFilter', false );
     this.getCourses();
   },
 };

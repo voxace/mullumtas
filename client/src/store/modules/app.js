@@ -9,6 +9,7 @@ const state = {
   studentsDrawer: false,
   loginDialog: false,
   fullscreen: false,
+  myCourses: false,
 };
 
 const getters = {
@@ -20,6 +21,7 @@ const getters = {
   snackbarColor: state => state.snackbarColor,
   snackbarMessage: state => state.snackbarMessage,
   loginDialog: state => state.loginDialog,
+  isMyCourses: state => state.myCourses,
 };
 
 const actions = {
@@ -61,6 +63,9 @@ const actions = {
   },
   closeSnackBar(context) {
     context.commit('closeSnackBar');
+  },
+  setMyCoursesFilter(context, value) {
+    context.commit('setMyCoursesFilter', value);
   },
 };
 
@@ -107,6 +112,9 @@ const mutations = {
   },
   closeSnackBar(state) {
     state.snackbar = false;
+  },
+  setMyCoursesFilter(state, value) {
+    state.myCourses = value;
   },
 };
 

@@ -30,6 +30,7 @@ const mutations = {
     state.loggedIn = true;
     state.username = user.detId;
     state.id = user._id;
+    state.courses = user.courses;
     if (user.admin == true) state.admin = user.admin;
   },
   logout(state) {

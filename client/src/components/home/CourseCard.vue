@@ -1,22 +1,51 @@
 <template>
-<v-flex xs12 sm6 md4 align-center justify-center>
-  <v-card hover :to="'/course/' + course.short">
-    <v-card-title primary-title class="align-center justify-center grey lighten-2">
+<v-flex
+  xs12
+  sm6
+  md4
+  align-center
+  justify-center
+>
+  <v-card
+    hover
+    :to="'/course/' + course.short"
+    height="100%"
+  >
+    <v-card-title
+      primary-title
+      class="align-center justify-center grey lighten-2"
+    >
       <h1 class="display-3">Year {{ course.grade }}</h1>
     </v-card-title>
-    <v-card-text class="text-xs-center">
+
+    <v-card-text
+      class="text-xs-center align-center justify-center"
+      style="height: 65%; display: flex; flex-direction: column;"
+    >
       <h3 class="headline my-3">{{ course.title }}</h3>
       <v-card-actions class="align-center justify-center">
-        <v-btn flat color="indigo">Access Course</v-btn>
+        <v-btn
+          flat
+          color="indigo"
+        >Access Course</v-btn>
         <v-tooltip v-if="course.protected">
           <v-icon slot="activator">lock</v-icon>
           Restricted to enrolled students only
         </v-tooltip>
         <fade-transition>
-          <v-btn to="/" exact active-class="" v-if="editing && isLoggedIn" flat color="error" @click="editCourse">Edit</v-btn>
+          <v-btn
+            to="/"
+            exact
+            active-class=""
+            v-if="editing && isLoggedIn"
+            flat
+            color="error"
+            @click="editCourse"
+          >Edit</v-btn>
         </fade-transition>
       </v-card-actions>
     </v-card-text>
+
   </v-card>
 </v-flex>
 </template>
@@ -25,7 +54,7 @@
 import FadeTransition from '@/components/transitions/FadeTransition.vue';
 
 export default {
-  props: ['course'],
+  props: [ 'course' ],
   components: {
     fadeTransition: FadeTransition,
   },
@@ -39,8 +68,8 @@ export default {
   },
   methods: {
     editCourse() {
-      this.$emit('edit', this.course);
-      this.$emit('edit2');
+      this.$emit( 'edit', this.course );
+      this.$emit( 'edit2' );
     },
   },
 };
